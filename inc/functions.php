@@ -1,7 +1,9 @@
 <?php
 
 function formatPHeaders($headers) {
-  return $headers;
+  return array_map(function($h) {
+    return implode("_", explode( " ", strtolower(($h))));
+  }, $headers);
 }
  
 function delete_all_plows(){
@@ -27,7 +29,6 @@ function upload_plow_data() {
   $file = fopen($csv,"r");
   $count = 0;
   $headers = [];
-  $excludedHeaders = ['id', 'mfg_id'];
   while( !feof($file) ) {
     $row = fgetcsv($file);
     // set headers
@@ -47,7 +48,7 @@ function upload_plow_data() {
     foreach($row as $col) {
       $key = $headers[$colCount];
       // title
-      if ($key === 'model') {
+      if ($key === 'title') {
        $args['post_title'] = $col;
       } else {
         $acfData[$key] = $col;
@@ -57,13 +58,11 @@ function upload_plow_data() {
     // create new plow post
     $newPostId = wp_insert_post( $args );
     foreach($acfData as $key => $val) {
-      if ($key === 'current_model' || $key === 'plow_type') {
-        update_field($key, $val, $newPostId);
-      }
+      update_field($key, $val, $newPostId);
     }
     $count++;
   }
   fclose($file);
-  echo json_encode(['success' => true]);
+  echo json_encode(['status' => true]);
   exit();
 }
