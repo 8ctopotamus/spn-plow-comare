@@ -15,5 +15,5 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 define('PLUGIN_SLUG', 'spn-plow-compare');
 
 // include( plugin_dir_path( __FILE__ ) . 'inc/functions.php' );
-// include( plugin_dir_path( __FILE__ ) . 'inc/cpt.php' );
+include( plugin_dir_path( __FILE__ ) . 'inc/cpt.php' );
 include( plugin_dir_path( __FILE__ ) . 'inc/init.php' );
