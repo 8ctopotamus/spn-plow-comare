@@ -1,5 +1,8 @@
 <?php
 
+/*
+ * CSV Import
+ */ 
 function formatPHeaders($headers) {
   return array_map(function($h) {
     return implode("_", explode( " ", strtolower(($h))));
@@ -58,6 +61,7 @@ function upload_plow_data() {
     // create new plow post
     $newPostId = wp_insert_post( $args );
     foreach($acfData as $key => $val) {
+      // blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
     }
     $count++;
