@@ -3,6 +3,7 @@ import React, { createContext } from 'react'
 const AppContext = createContext({
   search: '',
   filters: [],
+  compare: [],
 })
 
 export default AppContext

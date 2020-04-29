@@ -8,7 +8,17 @@ const updateLocalStorage = state => {
 
 export default (state, action) => {
   let updatedState
+  let foundIdx
   switch(action.type) {
+    case 'UPDATE_COMPARE':
+      foundIdx = state.compare.findIndex(p => p.ID === action.payload.ID)
+      updatedState = {
+        ...state,
+        compare: foundIdx > -1
+          ? state.compare.filter(p => p.ID !== action.payload.ID)
+          : [...state.compare, action.payload]
+      }
+      return updatedState
     case 'UPDATE_SEARCH':
       updatedState = {
         ...state,
