@@ -1,5 +1,27 @@
 <?php
 
+function spn_get_plow_data() {
+  $data = [];
+  // assets
+  $args = [
+    'post_type'  => 'plows',
+    'posts_per_page' => -1,
+  ];
+  $the_query = new WP_Query( $args );
+  if ( $the_query->have_posts() ) {
+    while ( $the_query->have_posts() ) {
+      $the_query->the_post();
+      $p = get_post();
+      $p->categories = [];
+      $p->acf = get_fields();
+      $data[] = $p;
+    }
+  }
+  wp_reset_postdata();
+  return $data;
+  exit;
+}
+
 /*
  * CSV Import
  */ 

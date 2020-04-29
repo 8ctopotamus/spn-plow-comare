@@ -76,14 +76,12 @@ function spn_plow_compare_load_shortcode_resources() {
 	}
 	
 	if ( $shortcode_found ) {
-		// get plow data here
-		// wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
-    //   'data' => $plowData,
-    //   'site_url' => site_url(),
-    //   'admin_ajax_url' => esc_url( admin_url('admin-post.php')),
-    // ] );
+		$allPlows = spn_get_plow_data();
+		wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
+			'plows' => $allPlows,
+      'site_url' => site_url(),
+      'admin_ajax_url' => esc_url( admin_url('admin-post.php')),
+    ] );
 		wp_enqueue_script( 'spn_plow_compare_react_app' );
 	}
 }
-
-
