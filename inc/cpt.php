@@ -1,6 +1,6 @@
 <?php
 
-function spn_plows_custom_posttype() {
+function spn_custom_posttypes() {
   register_post_type('plows', array(
     'label' => __('Plows'),
     'singular_label' => __('Plow'),
@@ -9,7 +9,7 @@ function spn_plows_custom_posttype() {
     'capability_type' => 'post',
     'hierarchical' => false,
     'rewrite' => array('slug' => 'plows'),
-    'supports' => array('title', 'editor'),
+    'supports' => array('title', 'editor', 'thumbnail'),
   ));
   
   // Register the taxonomy
@@ -41,6 +41,15 @@ function spn_plows_custom_posttype() {
       )
     );
 
-
+    register_post_type('manufacturers', array(
+      'label' => __('Manufacturers'),
+      'singular_label' => __('Manufacturer'),
+      'public' => true,
+      'show_ui' => true,
+      'capability_type' => 'post',
+      'hierarchical' => false,
+      'rewrite' => array('slug' => 'manufacturers'),
+      'supports' => array('title', 'editor', 'thumbnail'),
+    ));
 }
-add_action('init', 'spn_plows_custom_posttype');
+add_action('init', 'spn_custom_posttypes');

@@ -45,6 +45,7 @@ function spn_custom_toolbar_actions() { ?>
   </script>
 <?php }
 
+
 // Shortcode Scripts+styles
 add_action( 'wp_enqueue_scripts', 'spn_plow_compare_load_shortcode_resources' );
 function spn_plow_compare_load_shortcode_resources() {
@@ -56,7 +57,7 @@ function spn_plow_compare_load_shortcode_resources() {
 	} 
 	// production
 	else {
-		//...will figure this out later
+		//...will figure this out later...
 		// $string = file_get_contents(plugin_dir_path( __DIR__ ) . "client/build/static/asset-manifest.json");
 		// $json_a = json_decode($string, true);	
 		$app_js = null; // load built react app here
@@ -77,11 +78,25 @@ function spn_plow_compare_load_shortcode_resources() {
 	
 	if ( $shortcode_found ) {
 		$allPlows = spn_get_plow_data();
+
+		$plowTypes = array_unique(array_map(function($p) {
+			return $p->acf['plow_type'];
+		}, $allPlows));
+		
+		$bladeWidths = array_unique(array_map(function($p) {
+			return $p->acf['blade_width_expanded'];
+		}, $allPlows));
+
 		wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
 			'plows' => $allPlows,
+			'controls' => [
+				'plow_type' => $plowTypes,
+				'blade_width' => $bladeWidths,
+			],
       'site_url' => site_url(),
       'admin_ajax_url' => esc_url( admin_url('admin-post.php')),
     ] );
 		wp_enqueue_script( 'spn_plow_compare_react_app' );
 	}
 }
+

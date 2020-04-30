@@ -13,8 +13,8 @@ const plows = WP_DATA && WP_DATA.plows
   ? WP_DATA.plows
   : null;
   
-const criteria = (WP_DATA && WP_DATA.criteria) && WP_DATA.criteria
-  ? WP_DATA.criteria
+const controls = (WP_DATA && WP_DATA.controls) && WP_DATA.controls
+  ? WP_DATA.controls
   : null
 
 export default ({ children }) => {
@@ -26,7 +26,7 @@ export default ({ children }) => {
   }), [])
 
   return (
-    <AppContext.Provider value={{state, dispatch, plows, criteria}}>
+    <AppContext.Provider value={{state, dispatch, plows, controls}}>
       { children }
     </AppContext.Provider>
   )
