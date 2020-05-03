@@ -9,6 +9,8 @@ const updateLocalStorage = state => {
 export default (state, action) => {
   let updatedState
   let foundIdx
+  let name
+  let value
   switch(action.type) {
     case 'UPDATE_COMPARE':
       foundIdx = state.compare.findIndex(p => p.ID === action.payload.ID)
@@ -20,14 +22,14 @@ export default (state, action) => {
       }
       return updatedState
     case 'TOGGLE_FILTER':
-
-      !state.filters[action.payload.name].includes(action.payload.value)
-        ? null// add it
-        : null // remove it
-
+      name = action.payload.name
+      value = action.payload.value
+      const filters = !state.filters[name].includes(value)
+        ? {...state.filters, [name]: [...state.filters[name], value] }// add it
+        : {...state.filters, [name]: state.filters[name].filter(v => v !== value)} // remove it
       updatedState = {
         ...state,
-        // filters,
+        filters,
       }
       return updatedState
     case 'UPDATE_SEARCH':

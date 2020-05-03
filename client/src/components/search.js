@@ -8,6 +8,7 @@ export default () => {
     <>
       <input 
         onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
+        value={state.search}
         placeholder="Keyword search" 
         type="search"
       />
