@@ -4,6 +4,7 @@ import AppProvider from './context/provider'
 import HUD from './components/hud'
 import Search from './components/search'
 import Results from './components/results'
+import Compare from './components/compare'
 
 const Grid = styled.div`
   display: grid;
@@ -14,12 +15,15 @@ const Grid = styled.div`
 function App() {
   return (
     <AppProvider>
-    <HUD />
+      {/* <HUD /> */}
       <Grid>
         <div>
           <Search />
         </div>
-        <Results />
+        <div>
+          <Compare />
+          <Results />
+        </div>
       </Grid>
     </AppProvider>
   )
