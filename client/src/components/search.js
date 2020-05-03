@@ -17,8 +17,7 @@ export default () => {
         return val !== '' ? (
           <div key={key}>
             <h4>{key}</h4>
-            {Object.values(val).map(v => {
-              return (
+            {Object.values(val).map(v => (
                 <label key={v}>
                   <input
                     name={key}
@@ -28,7 +27,7 @@ export default () => {
                   /> {v}
                 </label>
               )
-            })}
+            )}
           </div>
         ) : null
       })}      

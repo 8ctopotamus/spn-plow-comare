@@ -23,9 +23,14 @@ export default () => {
             return p.post_name.toLowerCase().includes(keyword)
           })
           .filter(p => {
-            if (state.filters.length === 0)
-              return true
-            return true
+            // TODO: works for now, improve later
+            const matches = Object.entries(state.filters).map(filt => {
+              const [key, values] = filt
+              return values.length === 0
+                ? true
+                : values.includes(p.acf[key])
+            })
+            return !matches.includes(false)
           })
           .map(p => (
             <Item 

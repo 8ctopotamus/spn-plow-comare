@@ -8,11 +8,6 @@ const controls = (WP_DATA && WP_DATA.controls) && WP_DATA.controls
   ? WP_DATA.controls
   : null
 
-console.log({
-  plows,
-  controls
-})
-
 export default {
   plows,
   controls

@@ -91,7 +91,7 @@ function spn_plow_compare_load_shortcode_resources() {
 			'plows' => $allPlows,
 			'controls' => [
 				'plow_type' => $plowTypes,
-				'blade_width' => $bladeWidths,
+				'blade_width_expanded' => $bladeWidths,
 			],
       'site_url' => site_url(),
       'admin_ajax_url' => esc_url( admin_url('admin-post.php')),
