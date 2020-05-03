@@ -6,25 +6,31 @@ export default () => {
   
   return (
     <>
-      {Object.entries(controls).map(entry => {
-        const [key, val] = entry
-        console.log(entry)
-        return <div>
-          <h4>{key}</h4>
-          {Object.values(val).map(v => (
-            <label>
-              <input type="checkbox"/> {v}
-            </label>
-          ))}
-        </div>
-      })}
-
       <input 
         onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
         placeholder="Keyword search" 
-        type="search" 
+        type="search"
       />
-      
+      {Object.entries(controls).map(entry => {
+        const [key, val] = entry
+        return val !== '' ? (
+          <div key={key}>
+            <h4>{key}</h4>
+            {Object.values(val).map(v => {
+              return (
+                <label key={v}>
+                  <input
+                    name={key}
+                    value={v}
+                    onChange={e => dispatch({ type: 'TOGGLE_FILTER', payload: e.target })}
+                    type="checkbox"
+                  /> {v}
+                </label>
+              )
+            })}
+          </div>
+        ) : null
+      })}      
     </>
   )
 }

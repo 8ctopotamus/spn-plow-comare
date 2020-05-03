@@ -22,6 +22,11 @@ export default () => {
             const keyword = state.search.toLowerCase()
             return p.post_name.toLowerCase().includes(keyword)
           })
+          .filter(p => {
+            if (state.filters.length === 0)
+              return true
+            return true
+          })
           .map(p => (
             <Item 
               onClick={() => dispatch({ type:'UPDATE_COMPARE', payload: p })}

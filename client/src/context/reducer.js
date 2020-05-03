@@ -19,6 +19,17 @@ export default (state, action) => {
           : [...state.compare, action.payload]
       }
       return updatedState
+    case 'TOGGLE_FILTER':
+
+      !state.filters[action.payload.name].includes(action.payload.value)
+        ? null// add it
+        : null // remove it
+
+      updatedState = {
+        ...state,
+        // filters,
+      }
+      return updatedState
     case 'UPDATE_SEARCH':
       updatedState = {
         ...state,

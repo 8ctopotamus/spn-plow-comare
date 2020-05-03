@@ -1,8 +1,15 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
+import WP_DATA from './wp_data'
+
+const filters = Object.keys(WP_DATA.controls)
+  .reduce((prev, curr) => {
+    prev[curr] = []
+    return prev
+  }, {})
 
 const AppContext = createContext({
   search: '',
-  filters: [],
+  filters,
   compare: [],
 })
 

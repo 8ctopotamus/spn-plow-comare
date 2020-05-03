@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
 import AppProvider from './context/provider'
-import HUD from './context/hud'
+import HUD from './components/hud'
 import Search from './components/search'
 import Results from './components/results'
 
@@ -14,9 +14,11 @@ const Grid = styled.div`
 function App() {
   return (
     <AppProvider>
-      <Search />
+    <HUD />
       <Grid>
-        <HUD />
+        <div>
+          <Search />
+        </div>
         <Results />
       </Grid>
     </AppProvider>
