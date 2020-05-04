@@ -3,11 +3,13 @@ import styled from 'styled-components'
 
 const Result = styled.div``;
 
-export default ({ ID, post_name}) => (
+export default ({ plow, dispatch }) => (
   <Result
-    onClick={() => dispatch({ type: 'TOGGLE_COMPARE', payload: p })}
-    key={ID}
+    onClick={() => dispatch({
+      type: 'TOGGLE_COMPARE',
+      payload: plow,
+    })}
   >
-    <h3>{post_name}</h3>
+    <h3>{plow.post_name}</h3>
   </Result>
 )
