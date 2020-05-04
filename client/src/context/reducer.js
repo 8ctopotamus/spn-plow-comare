@@ -12,7 +12,7 @@ export default (state, action) => {
   let name
   let value
   switch(action.type) {
-    case 'UPDATE_COMPARE':
+    case 'TOGGLE_COMPARE':
       foundIdx = state.compare.findIndex(p => p.ID === action.payload.ID)
       updatedState = {
         ...state,
@@ -38,6 +38,11 @@ export default (state, action) => {
         search: action.payload,
       }
       return updatedState
+    case 'CHANGE_VIEW':
+      return {
+        ...state,
+        view: state.view === 'COMPARE' ? 'SEARCH' : 'COMPARE',
+      }
     case 'GET_LOCALSTORAGE':
       if (window && window.localStorage && localStorage.getItem(LS_KEY)) {
         return JSON.parse(localStorage.getItem(LS_KEY))

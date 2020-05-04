@@ -8,6 +8,7 @@ const filters = Object.keys(WP_DATA.controls)
   }, {})
 
 const AppContext = createContext({
+  view: 'SEARCH',
   search: '',
   filters,
   compare: [],

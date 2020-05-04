@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import AppContext from '../context'
+import Result from './result'
 
 const Grid = styled.div`
   display: grid;
@@ -8,8 +9,6 @@ const Grid = styled.div`
   grid-gap: 30px;
   text-transform: uppercase;
 `;
-
-const Item = styled.div``;
 
 export default () => {
   const {state, dispatch, plows} = useContext(AppContext)
@@ -32,13 +31,7 @@ export default () => {
             })
             return !matches.includes(false)
           })
-          .map(p => (
-            <Item 
-              onClick={() => dispatch({ type:'UPDATE_COMPARE', payload: p })}
-              key={p.ID}>
-              <h3>{p.post_name}</h3>
-            </Item>
-          ))
+          .map(p => <Result {...p} />)
       }
     </Grid>
   );
