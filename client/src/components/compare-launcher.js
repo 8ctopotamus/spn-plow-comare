@@ -32,16 +32,24 @@ const Badge = styled.span`
   }
 `
 
+const Button = styled.button`
+  margin-right: auto;
+  &:disabled {
+    opacity: 0.5;
+  }
+`
+
 export default () => {
   const { state, dispatch } = useContext(AppContext)
+  const numLoaded = state.compare.length
   return (
     <Flex>
-      <button
-        onClick={() => dispatch({ type: 'CHANGE_VIEW' })} 
-        style={{ marginRight: 'auto' }}
+      <Button
+        onClick={() => dispatch({ type: 'CHANGE_VIEW' })}
+        disabled={numLoaded < 2}
       >
-        {`Compare ${state.compare.length} plow${state.compare.length === 1 ? '' : 's'}`}
-      </button>
+        {`Compare ${numLoaded} plow${numLoaded === 1 ? '' : 's'}`}
+      </Button>
       { state.compare.map(p => (
         <Badge
           onClick={() => dispatch({
