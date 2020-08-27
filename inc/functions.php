@@ -89,6 +89,6 @@ function upload_plow_data() {
     $count++;
   }
   fclose($file);
-  echo json_encode(['status' => true]);
+  echo json_encode(['success' => true]);
   exit();
 }

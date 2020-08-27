@@ -1,15 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import ReactPlaceholder from 'react-placeholder';
+import "react-placeholder/lib/reactPlaceholder.css";
 
-const Result = styled.div``;
+const Result = styled.div`
+  background: ${props => props.selected ? '#cd2653' : 'transparent'};
+  cursor: pointer;
+`;
 
-export default ({ plow, dispatch }) => (
-  <Result
-    onClick={() => dispatch({
-      type: 'TOGGLE_COMPARE',
-      payload: plow,
-    })}
-  >
-    <h3>{plow.post_name}</h3>
-  </Result>
-)
+export default ({ plow, dispatch, selected }) => {
+  const [ready, setReady] = useState(false)
+  return (
+    <Result
+      selected={selected}
+      onClick={() => dispatch({
+        type: 'TOGGLE_COMPARE',
+        payload: plow,
+      })}
+    >
+      <h3 style={{marginTop: 0}}>{plow.post_name}</h3>
+      
+      {!ready && (
+        <ReactPlaceholder
+          showLoadingAnimation={true}
+          type='rect'
+          style={{width: '100%', height: 180}}
+        />
+      )}
+      
+      <img 
+        onLoad={() => setReady(true)}
+        src={`https://snowplownews.com/cm/images/${plow.acf.image}`}
+        alt={plow.post_name}
+        style={{ display: ready ? 'block': 'none' }}
+      />
+    </Result>
+  )
+}

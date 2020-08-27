@@ -8,3 +8,5 @@ Use the shortcode `[spn-plow-compare]` anywhere on your site!
 1. Import the ACF field config
 2. Use Import Plows tool in WP Admin toolbar
 3. Compile React app (client - npm run build)
+
+Note: Google ads typically 300x250px

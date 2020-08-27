@@ -32,9 +32,20 @@ export default () => {
 
   return (
     <Grid>
-      { filtered.map(p => (
-        <Result plow={p} dispatch={dispatch} key={p.ID} />
-      )) }
+      { filtered.map(p => {
+        const selected = state.compare
+          .find(c => c.ID === p.ID) 
+            ? true 
+            : false
+        return (
+          <Result
+            plow={p}
+            dispatch={dispatch}
+            selected={selected}
+            key={p.ID}
+          />
+        )
+      }) }
     </Grid>
   );
 }

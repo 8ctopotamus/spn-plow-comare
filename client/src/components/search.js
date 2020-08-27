@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import AppContext from '../context/index'
+import MultiRange from './multirange'
 
 export default () => {
   const { state, dispatch, controls } = useContext(AppContext)
@@ -14,20 +15,28 @@ export default () => {
       />
       {Object.entries(controls).map(entry => {
         const [key, val] = entry
+        let Control
+        switch(key) {
+          case 'blade_width_expanded':
+            Control = <MultiRange />
+            break
+          default:
+            Control = Object.values(val).map(v => (val !== '' ? (
+              <label key={v}>
+                <input
+                  name={key}
+                  value={v}
+                  onChange={e => dispatch({ type: 'TOGGLE_FILTER', payload: e.target })}
+                  type="checkbox"
+                /> {v}
+              </label>
+            ) : null))
+        }
+
         return val !== '' ? (
           <div key={key}>
             <h4>{key}</h4>
-            {Object.values(val).map(v => (
-                <label key={v}>
-                  <input
-                    name={key}
-                    value={v}
-                    onChange={e => dispatch({ type: 'TOGGLE_FILTER', payload: e.target })}
-                    type="checkbox"
-                  /> {v}
-                </label>
-              )
-            )}
+            {Control}
           </div>
         ) : null
       })}      
