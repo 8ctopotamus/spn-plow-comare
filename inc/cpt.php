@@ -40,16 +40,5 @@ function spn_custom_posttypes() {
         )
       )
     );
-
-    register_post_type('manufacturers', array(
-      'label' => __('Manufacturers'),
-      'singular_label' => __('Manufacturer'),
-      'public' => true,
-      'show_ui' => true,
-      'capability_type' => 'post',
-      'hierarchical' => false,
-      'rewrite' => array('slug' => 'manufacturers'),
-      'supports' => array('title', 'editor', 'thumbnail'),
-    ));
 }
 add_action('init', 'spn_custom_posttypes');

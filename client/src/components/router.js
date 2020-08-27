@@ -8,7 +8,7 @@ import ComparisonTable from '../components/comparison-table'
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   grid-gap: 30px;
 `;
 

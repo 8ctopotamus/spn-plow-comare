@@ -20,22 +20,22 @@ add_action( 'admin_footer', 'spn_custom_toolbar_actions' );
 function spn_custom_toolbar_actions() { ?>
   <script type="text/javascript">
 		jQuery("li#wp-admin-bar-import-plows .ab-item").on('click', function() {
-      const confirmation = confirm('You are about to overwrite all plows.');
-      jQuery(this).text('Importing... please be patient 😁')
+			const confirmation = confirm('You are about to overwrite all plows.');
+			$btn = jQuery(this);
+      $btn.text('Importing... please be patient 😁')
 			jQuery.post(
 				'<?php echo esc_url( admin_url('admin-post.php') ); ?>',
 				{ 
-          action: 'spn_plow_compare_actions',
-          do: 'upload_plow_data',
+					action: 'spn_plow_compare_actions',
+					do: 'upload_plow_data',
 				},
 				function(response) {
 					const res = JSON.parse(response)
 					console.log(res)
-					if (res.status == 'success') {
-            jQuery(this).text('Import Plows')
-						alert(`Plows added!`)
+					if (res.success === true) {
+            $btn.text('Plows imported 👍')
 					} else {
-            jQuery(this).text('Import Plows')
+            $btn.text('Import Plows')
 						console.error(res)
 						alert('Plow import failed :(')
 					}
@@ -55,12 +55,11 @@ function spn_plow_compare_load_shortcode_resources() {
 	if (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
 		$app_js = 'http://localhost:3000/static/js/bundle.js';
 	} 
-	// production
+	// production - load compiled react app
 	else {
-		//...will figure this out later...
-		// $string = file_get_contents(plugin_dir_path( __DIR__ ) . "client/build/static/asset-manifest.json");
-		// $json_a = json_decode($string, true);	
-		$app_js = null; // load built react app here
+		// load built react app here
+		$compiledReactApp = preg_grep('~^main.*\.js$~', scandir(plugin_dir_path( __DIR__ ) . "client/build/static/js"));
+		$app_js = plugin_dir_path( __DIR__ ) .'client/build/static/js/' . $compiledReactApp[2];
 	}
 
 	wp_register_script( 'spn_plow_compare_react_app', $app_js, array(), false, true );
