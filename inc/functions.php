@@ -25,6 +25,27 @@ function spn_get_plow_data() {
 /*
  * CSV Import
  */ 
+
+function spn_get_attachement_id($key, $val, $id) {
+  $imgUrlParts = explode('/', $val);
+  $imgFileName = $imgUrlParts[count($imgUrlParts) - 1];
+  $foundId = false;
+  $media_query = new WP_Query(
+    array(
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'posts_per_page' => -1,
+    )
+  );
+  foreach ($media_query->posts as $post) {
+    if (strpos($val, $post->post_title) !== false) {
+      $foundId = $post->ID;
+      break;
+    }
+  }
+  return $foundId;
+}
+
 function formatPHeaders($headers) {
   return array_map(function($h) {
     return implode("_", explode( " ", strtolower(($h))));
@@ -86,6 +107,19 @@ function upload_plow_data() {
       // blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
     }
+
+    // populate ACF fields
+    // foreach($acfData as $key => $val) {
+    //   $acfField = acf_get_field($key);
+    //   if ($acfField['type'] === 'image' || $acfField['type'] === 'file') {
+    //     $found = advctrls_get_attachement_id($key, $val, $newPostId);
+    //     if ($found) {
+    //       $val = $found;
+    //     }
+    //   }
+    //   update_field($key, $val, $newPostId);
+    // }
+
     $count++;
   }
   fclose($file);
