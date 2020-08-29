@@ -14,8 +14,8 @@ function spn_custom_posttypes() {
   
   // Register the taxonomy
   register_taxonomy( 'plow_categories', 
-  array(0 => 'plows'),
-  array(
+    array(0 => 'plows'),
+    array(
     'show_in_rest' => true, /* Required to expose to WP-JSON API */
     'rest_base'=> 'plow-categories', /* Required to expose to WP-JSON API */
     'rest_controller_class' => 'WP_REST_Terms_Controller', /* Required to expose to WP-JSON API */
@@ -37,8 +37,8 @@ function spn_custom_posttypes() {
         'separate_items_with_commas' => '',
         'add_or_remove_items' => 'Add or Remove',
         'choose_from_most_used' => '',
-        )
       )
-    );
+    )
+  );
 }
 add_action('init', 'spn_custom_posttypes');

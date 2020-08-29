@@ -71,7 +71,7 @@ function delete_all_plows(){
  
 function upload_plow_data() {
   delete_all_plows();
-  $csv = plugin_dir_url( __DIR__ ) . 'data/spn_plows.csv';
+  $csv = plugin_dir_url( __DIR__ ) . 'data/plows.csv';
   $file = fopen($csv,"r");
   $count = 0;
   $headers = [];
@@ -104,11 +104,11 @@ function upload_plow_data() {
     // create new plow post
     $newPostId = wp_insert_post( $args );
     foreach($acfData as $key => $val) {
-      // blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
+      // ToDo: blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
     }
 
-    // populate ACF fields
+    // Note for later: Example of populating images fields
     // foreach($acfData as $key => $val) {
     //   $acfField = acf_get_field($key);
     //   if ($acfField['type'] === 'image' || $acfField['type'] === 'file') {

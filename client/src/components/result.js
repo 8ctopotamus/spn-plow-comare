@@ -9,7 +9,9 @@ const Result = styled.div`
 `;
 
 export default ({ plow, dispatch, selected }) => {
+  const { blade_height_max, blade_width_expanded, } = plow.acf
   const [ready, setReady] = useState(false)
+  console.log(plow)
   return (
     <Result
       selected={selected}
@@ -18,6 +20,7 @@ export default ({ plow, dispatch, selected }) => {
         payload: plow,
       })}
     >
+      <span>MANUFACTURER HERE</span>
       <h3 style={{marginTop: 0}}>{plow.post_name}</h3>
       
       {!ready && (
@@ -29,11 +32,13 @@ export default ({ plow, dispatch, selected }) => {
       )}
       
       <img 
+        // src={`https://snowplownews.com/cm/images/${plow.acf.image}`}
         onLoad={() => setReady(true)}
-        src={`https://snowplownews.com/cm/images/${plow.acf.image}`}
         alt={plow.post_name}
         style={{ display: ready ? 'block': 'none' }}
       />
+
+      <p>W: {blade_width_expanded}" x H: {blade_height_max}"</p>
     </Result>
   )
 }
