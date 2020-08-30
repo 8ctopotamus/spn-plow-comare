@@ -33,10 +33,8 @@ export default () => {
         }
 
         if (p.plow_categories && p.plow_categories.length > 0) {
-          console.log(filt)
-          console.log(p)
-          // console.log(key, values, p)
-          // values = p.acf.mfg_id
+          const match = p.plow_categories.find(cat => values.includes(cat))
+          if (match) return true
         } 
 
         return values.length === 0 
