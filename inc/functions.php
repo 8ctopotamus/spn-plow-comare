@@ -12,7 +12,11 @@ function spn_get_plow_data() {
       $the_query->the_post();
       $p = get_post();
       $p->acf = get_fields();
-      $p->plow_categories = get_the_terms($p->ID, 'plow_categories');
+      $p->plow_categories = [];
+      $plowCatsTax = get_the_terms($p->ID, 'plow_categories');
+      foreach ($plowCatsTax as $cat) {
+        $p->plow_categories[] = $cat->slug;
+      }
       $data[] = $p;
     }
   } 
@@ -93,16 +97,18 @@ function upload_plow_data() {
   delete_all_plows();
   $csv = plugin_dir_url( __DIR__ ) . 'data/plows.csv';
   $debug = [];
-  $file = fopen($csv,"r");
-  $count = 0;
-  $headers = [];
-  $catslug = [];
 
+  // create an index of manufacturer slugs
   $maufacturers = spn_get_manufacturers_data();
   $manufacturerSlugs = array_map(function($p) {
     return [$p->acf['mfg_id'] => $p->post_name];
   }, $maufacturers);
 
+  // let's begin.
+  $file = fopen($csv,"r");
+  $count = 0;
+  $headers = [];
+  $catslug = [];
   while( !feof($file) ) {
     $row = fgetcsv($file);
     // set headers
@@ -111,7 +117,7 @@ function upload_plow_data() {
       $count++;
       continue; // skip to body of data
     }
-    // format data for new plow post
+    // data a for new plow post
     $args = [
       'post_title' => '',
       'post_type' => 'plows',
@@ -129,9 +135,12 @@ function upload_plow_data() {
       // manufacturers
       elseif ($key === 'mfg_id') {
         foreach($manufacturerSlugs as $k => $v) {
-          if ($col === $k) {
-            $debug[] = $v;
-            $manuSlug = $v;
+          $mfg_id = $col;
+          $match = $v[$mfg_id];
+          if ($match) {
+            $debug[] = $match;
+            $manuSlug =$match;
+            $acfData[$key] = $match;
             break;
           }
         }

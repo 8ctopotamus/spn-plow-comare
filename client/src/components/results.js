@@ -23,17 +23,22 @@ export default () => {
       // TODO: works for now, improve later
       const matches = Object.entries(state.filters).map(filt => {
         let [key, values] = filt
-        if (p.plow_categories) {
-          console.log(p)
-          // console.log(key, values, p)
-          // values = p.acf.mfg_id
-        } else if (key === 'blade_width_expanded') {
+
+        if (key === 'blade_width_expanded') {
           const [ min, max ] = values
           const pWidth = parseFloat(p.acf.blade_width_expanded)
           if (min <= pWidth && pWidth <= max) {
             return true
           }
         }
+
+        if (p.plow_categories && p.plow_categories.length > 0) {
+          console.log(filt)
+          console.log(p)
+          // console.log(key, values, p)
+          // values = p.acf.mfg_id
+        } 
+
         return values.length === 0 
           ? true : values.includes(p.acf[key])
       })

@@ -1,6 +1,4 @@
 <?php
-// function spn_plow_compare_enqueue_scripts_styles() {}
-// add_action('wp_enqueue_scripts', 'spn_plow_compare_enqueue_scripts_styles');
 
 // routes
 add_action( 'admin_post_nopriv_spn_plow_compare_actions', 'spn_plow_compare_actions' );
@@ -78,16 +76,22 @@ function spn_plow_compare_load_shortcode_resources() {
 	
 	if ( $shortcode_found ) {
 		$allPlows = spn_get_plow_data();
-		$allManufacturers = spn_get_manufacturers_data();
 
 		$plowTypes = array_unique(array_map(function($p) {
 			return $p->acf['plow_type'];
 		}, $allPlows));
 
-		$manufacturers = array_unique(array_map(function($p) {
-			return $p->plow_categories[0]->slug;
-		}, $allPlows));
-
+		$manufacturers = [];
+		foreach($allPlows as $p) {
+			if ($p->plow_categories) {
+				foreach( $p->plow_categories as $pCat) {
+					if (!in_array($pCat, $manufacturers)) {
+						$manufacturers[] = $pCat;
+					}
+				}
+			}
+		}
+		
 		wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
 			'plows' => $allPlows,
 			'controls' => [
