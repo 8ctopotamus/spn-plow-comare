@@ -4,7 +4,7 @@ import { Range, getTrackBackground } from 'react-range';
 const STEP = 0.1;
 const MIN = 0;
 const MAX = 100;
-const COLORS = ['#0C2960', '#276EF1', '#9CBCF8', '#ccc'];
+const COLORS = ['#0C2960', '#276EF1', '#0C2960'];
 
 class MultipleThumbs extends React.Component {
   state = {
@@ -25,6 +25,7 @@ class MultipleThumbs extends React.Component {
           min={MIN}
           max={MAX}
           onChange={values => this.setState({ values })}
+          onFinalChange={this.props.handleFinalRangeChange}
           renderTrack={({ props, children }) => (
             <div
               onMouseDown={props.onMouseDown}

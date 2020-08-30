@@ -22,10 +22,7 @@ function spn_get_plow_data() {
   exit;
 }
 
-/*
- * CSV Import
- */ 
-
+// find media attachment id by filename
 function spn_get_attachement_id($key, $val, $id) {
   $imgUrlParts = explode('/', $val);
   $imgFileName = $imgUrlParts[count($imgUrlParts) - 1];
@@ -46,6 +43,10 @@ function spn_get_attachement_id($key, $val, $id) {
   return $foundId;
 }
 
+
+/*
+ * CSV Import
+ */ 
 function formatPHeaders($headers) {
   return array_map(function($h) {
     return implode("_", explode( " ", strtolower(($h))));
@@ -68,13 +69,15 @@ function delete_all_plows(){
   );
   return $result !== false;
 }
- 
+
 function upload_plow_data() {
   delete_all_plows();
   $csv = plugin_dir_url( __DIR__ ) . 'data/plows.csv';
+  $debug = [];
   $file = fopen($csv,"r");
   $count = 0;
   $headers = [];
+  $catTitles = [];
   while( !feof($file) ) {
     $row = fgetcsv($file);
     // set headers
@@ -95,7 +98,25 @@ function upload_plow_data() {
       $key = $headers[$colCount];
       // title
       if ($key === 'title') {
-       $args['post_title'] = $col;
+        $args['post_title'] = $col;
+      } 
+      // query manufacturers
+      elseif ($key === 'mfg_id') {
+        $debug[] = $col;
+        $mfg_id = $col;
+        $manuArgs = [
+          'post_type' => 'manufacturer',
+          'meta_key'		=> 'mfg_id',
+	        'meta_value'	=> $mfg_id,
+        ];
+        $mfg_query = new WP_Query( $args );
+        if( $mfg_query->have_posts() ):
+          while( $mfg_query->have_posts() ) : $mfg_query->the_post();
+            $args['mfg_id'] = get_the_ID();
+            $catTitles[] = get_the_title();
+          endwhile;
+        endif;
+        wp_reset_query();
       } else {
         $acfData[$key] = $col;
       }
@@ -103,11 +124,19 @@ function upload_plow_data() {
     }
     // create new plow post
     $newPostId = wp_insert_post( $args );
+    // attach ACF meta_data
     foreach($acfData as $key => $val) {
       // ToDo: blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
+      
     }
 
+    // add cat to post
+    foreach($catTitles as $t) {
+      // $catSlugs[] = strtolower(preg_replace('/\s+/', '_', $cat));
+      wp_set_object_terms($newPostId, $t, 'plow_categories', true);
+    }
+    
     // Note for later: Example of populating images fields
     // foreach($acfData as $key => $val) {
     //   $acfField = acf_get_field($key);
@@ -123,6 +152,6 @@ function upload_plow_data() {
     $count++;
   }
   fclose($file);
-  echo json_encode(['success' => true]);
+  echo json_encode(['success' => true, 'debug' => $debug]);
   exit();
 }

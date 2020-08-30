@@ -4,9 +4,10 @@ import MultiRange from './multirange'
 
 export default () => {
   const { state, dispatch, controls } = useContext(AppContext)
-  
+
   return (
     <>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
       <input 
         onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
         value={state.search}
@@ -18,7 +19,17 @@ export default () => {
         let Control
         switch(key) {
           case 'blade_width_expanded':
-            Control = <MultiRange />
+            Control = (
+              <MultiRange 
+                handleFinalRangeChange={values => dispatch({ 
+                  type: 'BLADE_WIDTH_CHANGE', 
+                  payload: {
+                    name: key,
+                    values,
+                  } 
+                })}           
+              />
+            )
             break
           default:
             Control = Object.values(val).map(v => (val !== '' ? (

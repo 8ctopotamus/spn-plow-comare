@@ -11,7 +11,6 @@ const Result = styled.div`
 export default ({ plow, dispatch, selected }) => {
   const { blade_height_max, blade_width_expanded, } = plow.acf
   const [ready, setReady] = useState(false)
-  console.log(plow)
   return (
     <Result
       selected={selected}
