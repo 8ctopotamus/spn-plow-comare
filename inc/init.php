@@ -36,8 +36,8 @@ function spn_custom_toolbar_actions() { ?>
 						console.log(res)
             $btn.text('Plows imported 👍')
 					} else {
-            $btn.text('Import Plows')
-						console.error(res)
+						$btn.text('Import Plows')
+						console.log(response)
 						alert('Plow import failed :(')
 					}
 				},
@@ -78,19 +78,21 @@ function spn_plow_compare_load_shortcode_resources() {
 	
 	if ( $shortcode_found ) {
 		$allPlows = spn_get_plow_data();
+		$allManufacturers = spn_get_manufacturers_data();
 
 		$plowTypes = array_unique(array_map(function($p) {
 			return $p->acf['plow_type'];
 		}, $allPlows));
-		
-		$bladeWidths = array_unique(array_map(function($p) {
-			return $p->acf['blade_width_expanded'];
+
+		$manufacturers = array_unique(array_map(function($p) {
+			return $p->plow_categories[0]->slug;
 		}, $allPlows));
 
 		wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
 			'plows' => $allPlows,
 			'controls' => [
 				'plow_type' => $plowTypes,
+				'manufacturers' => $manufacturers,
 				'blade_width_expanded' => $bladeWidths,
 			],
       'site_url' => site_url(),
@@ -99,4 +101,3 @@ function spn_plow_compare_load_shortcode_resources() {
 		wp_enqueue_script( 'spn_plow_compare_react_app' );
 	}
 }
-

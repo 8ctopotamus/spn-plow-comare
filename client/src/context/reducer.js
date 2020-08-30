@@ -61,6 +61,7 @@ export default (state, action) => {
       if (window && window.localStorage && localStorage.getItem(LS_KEY)) {
         return JSON.parse(localStorage.getItem(LS_KEY))
       }
+      break;
     default:
       return state
   }

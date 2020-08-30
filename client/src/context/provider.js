@@ -1,7 +1,7 @@
 import React, {
   useContext,
   useReducer,
-  useEffect,
+  // useEffect,
 } from 'react'
 
 import AppContext from './index'

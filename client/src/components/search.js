@@ -7,7 +7,6 @@ export default () => {
 
   return (
     <>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
       <input 
         onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
         value={state.search}

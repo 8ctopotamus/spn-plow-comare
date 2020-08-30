@@ -2,7 +2,6 @@
 
 function spn_get_plow_data() {
   $data = [];
-  // assets
   $args = [
     'post_type'  => 'plows',
     'posts_per_page' => -1,
@@ -12,15 +11,35 @@ function spn_get_plow_data() {
     while ( $the_query->have_posts() ) {
       $the_query->the_post();
       $p = get_post();
-      $p->categories = [];
       $p->acf = get_fields();
+      $p->plow_categories = get_the_terms($p->ID, 'plow_categories');
       $data[] = $p;
     }
-  }
+  } 
   wp_reset_postdata();
   return $data;
   exit;
 }
+
+function spn_get_manufacturers_data() {
+  $data = [];
+  $manuArgs = [
+    'post_type' => 'manufacturer',
+    'posts_per_page' => -1,
+  ];
+  $mfg_query = new WP_Query( $manuArgs );
+  if( $mfg_query->have_posts() ):
+    while( $mfg_query->have_posts() ) : $mfg_query->the_post();
+      $p = get_post();
+      $p->acf = get_fields();
+      $data[] = $p;
+    endwhile;
+  endif;
+  wp_reset_query();
+  return $data;
+  exit;
+}
+
 
 // find media attachment id by filename
 function spn_get_attachement_id($key, $val, $id) {
@@ -45,7 +64,7 @@ function spn_get_attachement_id($key, $val, $id) {
 
 
 /*
- * CSV Import
+ * CSV Import Plows
  */ 
 function formatPHeaders($headers) {
   return array_map(function($h) {
@@ -77,7 +96,13 @@ function upload_plow_data() {
   $file = fopen($csv,"r");
   $count = 0;
   $headers = [];
-  $catTitles = [];
+  $catslug = [];
+
+  $maufacturers = spn_get_manufacturers_data();
+  $manufacturerSlugs = array_map(function($p) {
+    return [$p->acf['mfg_id'] => $p->post_name];
+  }, $maufacturers);
+
   while( !feof($file) ) {
     $row = fgetcsv($file);
     // set headers
@@ -94,47 +119,40 @@ function upload_plow_data() {
     ];
     $acfData = [];
     $colCount = 0;
+    $manuSlug = null;
     foreach($row as $col) {
       $key = $headers[$colCount];
       // title
       if ($key === 'title') {
         $args['post_title'] = $col;
       } 
-      // query manufacturers
+      // manufacturers
       elseif ($key === 'mfg_id') {
-        $debug[] = $col;
-        $mfg_id = $col;
-        $manuArgs = [
-          'post_type' => 'manufacturer',
-          'meta_key'		=> 'mfg_id',
-	        'meta_value'	=> $mfg_id,
-        ];
-        $mfg_query = new WP_Query( $args );
-        if( $mfg_query->have_posts() ):
-          while( $mfg_query->have_posts() ) : $mfg_query->the_post();
-            $args['mfg_id'] = get_the_ID();
-            $catTitles[] = get_the_title();
-          endwhile;
-        endif;
-        wp_reset_query();
+        foreach($manufacturerSlugs as $k => $v) {
+          if ($col === $k) {
+            $debug[] = $v;
+            $manuSlug = $v;
+            break;
+          }
+        }
       } else {
         $acfData[$key] = $col;
       }
       $colCount++;
-    }
+    }  
+
     // create new plow post
     $newPostId = wp_insert_post( $args );
+
     // attach ACF meta_data
     foreach($acfData as $key => $val) {
       // ToDo: blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
-      
     }
 
-    // add cat to post
-    foreach($catTitles as $t) {
-      // $catSlugs[] = strtolower(preg_replace('/\s+/', '_', $cat));
-      wp_set_object_terms($newPostId, $t, 'plow_categories', true);
+    // add manu cat to post
+    if ($manuSlug) {
+      wp_set_object_terms($newPostId, $manuSlug, 'plow_categories', true);
     }
     
     // Note for later: Example of populating images fields
