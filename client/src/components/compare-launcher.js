@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import AppContext from '../context'
 
@@ -42,14 +42,26 @@ const Button = styled.button`
 export default () => {
   const { state, dispatch } = useContext(AppContext)
   const numLoaded = state.compare.length
+  const notEnoughPlows = numLoaded < 2
+  const isCompareView = state.view === 'COMPARE'
+  const buttonText = isCompareView
+    ? `Back to Search`
+    : `Compare ${numLoaded} plow${numLoaded === 1 ? '' : 's'}`
+
+  useEffect(() => { 
+    if (isCompareView && notEnoughPlows)
+      dispatch({ type: 'CHANGE_VIEW', payload: 'SEARCH' })
+  }, [numLoaded])
+
   return (
     <Flex>
       <Button
         onClick={() => dispatch({ type: 'CHANGE_VIEW' })}
-        disabled={numLoaded < 2}
+        disabled={notEnoughPlows}
       >
-        {`Compare ${numLoaded} plow${numLoaded === 1 ? '' : 's'}`}
+        {buttonText}
       </Button>
+      
       { state.compare.map(p => (
         <Badge
           onClick={() => dispatch({

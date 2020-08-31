@@ -45,7 +45,6 @@ export default () => {
 
   return (
     <Grid>
-      {/*<pre>{JSON.stringify(state, null, 2)}</pre>*/}
       { filtered.map(p => {
         const selected = state.compare
           .find(c => c.ID === p.ID) ? true : false
