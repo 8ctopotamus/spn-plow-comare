@@ -25,14 +25,14 @@ export default () => {
         let [key, values] = filt
 
         if (key === 'blade_width_expanded') {
-          const [ min, max ] = values
+          const [min, max] = values
           const pWidth = parseFloat(p.acf.blade_width_expanded)
           if (min <= pWidth && pWidth <= max) {
             return true
           }
         }
 
-        if (p.plow_categories && p.plow_categories.length > 0) {
+        if (key === 'manufacturers' && p.plow_categories && p.plow_categories.length > 0) {
           const match = p.plow_categories.find(cat => values.includes(cat))
           if (match) return true
         } 

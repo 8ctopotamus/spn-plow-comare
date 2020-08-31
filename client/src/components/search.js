@@ -1,6 +1,12 @@
 import React, { useContext } from 'react'
+import styled from 'styled-components'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
+
+const FieldGroup = styled.div`
+  display:flex;
+  flex-direction: column;
+`
 
 export default () => {
   const { state, dispatch, controls } = useContext(AppContext)
@@ -44,10 +50,10 @@ export default () => {
         }
 
         return val !== '' ? (
-          <div key={key}>
+          <FieldGroup key={key}>
             <h4>{key}</h4>
             {Control}
-          </div>
+          </FieldGroup>
         ) : null
       })}      
     </>
