@@ -4,13 +4,17 @@ import ReactPlaceholder from 'react-placeholder';
 import "react-placeholder/lib/reactPlaceholder.css";
 
 const Result = styled.div`
-  background: ${props => props.selected ? '#cd2653' : 'transparent'};
+  background: ${props => props.selected ? '#cd2653' : 'white'};
   cursor: pointer;
+  padding: 12px;
+  text-align: left;
 `;
 
 export default ({ plow, dispatch, selected }) => {
-  const { blade_height_max, blade_width_expanded, } = plow.acf
+  const { acf, plow_categories } = plow
+  const { blade_height_max, blade_width_expanded, } = acf
   const [ready, setReady] = useState(false)
+
   return (
     <Result
       selected={selected}
@@ -19,7 +23,9 @@ export default ({ plow, dispatch, selected }) => {
         payload: plow,
       })}
     >
-      <span>MANUFACTURER HERE</span>
+      {plow_categories && plow_categories.length > 0 && (
+        <span>{plow_categories[0]}</span>
+      )}
       <h3 style={{marginTop: 0}}>{plow.post_name}</h3>
       
       {!ready && (
@@ -32,11 +38,13 @@ export default ({ plow, dispatch, selected }) => {
       
       <img 
         // src={`https://snowplownews.com/cm/images/${plow.acf.image}`}
+        src="https://snowplownews.com/cm/images/meyer_SuperV.jpg"
         onLoad={() => setReady(true)}
         alt={plow.post_name}
         style={{ display: ready ? 'block': 'none' }}
       />
 
+      {/* TODO: width should be ft in, ex: 8'2" */}
       <p>W: {blade_width_expanded}" x H: {blade_height_max}"</p>
     </Result>
   )
