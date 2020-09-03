@@ -50,6 +50,8 @@ add_action( 'wp_enqueue_scripts', 'spn_plow_compare_load_shortcode_resources' );
 function spn_plow_compare_load_shortcode_resources() {
 	global $post, $wpdb;
 	
+  wp_register_style( 'animate_css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css' );
+
 	// localhost
 	if (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
 		$app_js = 'http://localhost:3000/static/js/bundle.js';
@@ -75,6 +77,8 @@ function spn_plow_compare_load_shortcode_resources() {
 	}
 	
 	if ( $shortcode_found ) {
+		wp_enqueue_style('animate_css');
+
 		$allPlows = spn_get_plow_data();
 
 		$plowTypes = array_unique(array_map(function($p) {

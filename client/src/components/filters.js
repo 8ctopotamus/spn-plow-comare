@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { MdRestore } from 'react-icons/md'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
 

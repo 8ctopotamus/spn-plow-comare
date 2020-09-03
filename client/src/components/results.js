@@ -2,12 +2,20 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import AppContext from '../context'
 import Result from './result'
+import CONSTANTS from '../constants'
 
-const Grid = styled.div`
+const Results = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 30px;
   text-transform: uppercase;
+  padding: 20px 30px 60px calc(${CONSTANTS.NAV_WIDTH} + 30px);
+  @media(max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    grid-template-columns: 1fr;
+    padding: 0;
+    overflow-y: initial;
+    height: auto;
+  }
 `;
 
 export default () => {
@@ -44,7 +52,7 @@ export default () => {
     })
 
   return (
-    <Grid>
+    <Results>
       { filtered.map(p => {
         const selected = state.compare
           .find(c => c.ID === p.ID) ? true : false
@@ -57,6 +65,6 @@ export default () => {
           />
         )
       }) }
-    </Grid>
+    </Results>
   );
 }

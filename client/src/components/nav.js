@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import AppContext from '../context'
 
-const Flex = styled.div`
+const Nav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,14 +54,7 @@ export default () => {
   }, [numLoaded])
 
   return (
-    <Flex>
-      <Button
-        onClick={() => dispatch({ type: 'CHANGE_VIEW' })}
-        disabled={notEnoughPlows}
-      >
-        {buttonText}
-      </Button>
-      
+    <Nav>
       { state.compare.map(p => (
         <Badge
           onClick={() => dispatch({
@@ -74,6 +67,13 @@ export default () => {
           <Icon />
         </Badge>
       )) }
-    </Flex>
+
+      <Button
+        onClick={() => dispatch({ type: 'CHANGE_VIEW' })}
+        disabled={notEnoughPlows}
+      >
+        {buttonText}
+      </Button>
+    </Nav>
   )
 }
