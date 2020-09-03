@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
+import { darken } from 'polished'
 import AppContext from '../context'
+import CONSTANTS from '../constants'
 
 const Nav = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 50px;
   background: #23448a;
 `
 
@@ -16,11 +17,10 @@ const Icon = styled.span`
     content: '⊚';
   }
 `
-
+// background: ${darken(0.3), CONSTANTS.COLORS.PRIMARY}
 const Badge = styled.span`
   display: flex;
   align-items: center;
-  background: #cd2653;
   border-radius: 8px;
   padding: 5px 10px;
   color: white;
@@ -34,8 +34,12 @@ const Badge = styled.span`
 `
 
 const Button = styled.button`
-  margin-right: auto;
+  background: ${darken(0.1, CONSTANTS.COLORS.SECONDARY)};
+  color: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)};
+  font-weight: bold;
   &:disabled {
+    background: none;
+    color: white;
     opacity: 0.5;
   }
 `

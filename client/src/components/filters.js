@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+
 import { MdRestore } from 'react-icons/md'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
@@ -16,7 +17,7 @@ const Heading = styled.h6`
 const FieldGroup = styled.div`
   display:flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `
 
 export default () => {
@@ -30,23 +31,30 @@ export default () => {
         value={state.search}
         placeholder="Keyword search" 
         type="search"
-        style={{ marginBottom: 10 }}
+        style={{ marginBottom: 15 }}
       />
       {Object.entries(controls).map(entry => {
         const [key, val] = entry
         let Control
         switch(key) {
           case 'blade_width_expanded':
+            // TODO: memoize min max
+            const min = Math.min(...controls.blade_width_expanded)
+            const max = Math.max(...controls.blade_width_expanded)
             Control = (
-              <MultiRange 
-                handleFinalRangeChange={values => dispatch({ 
-                  type: 'BLADE_WIDTH_CHANGE', 
-                  payload: {
-                    name: key,
-                    values,
-                  } 
-                })}           
-              />
+              <div style={{paddingLeft: 12, paddingRight: 12}}>
+                <MultiRange 
+                  min={min}
+                  max={max}
+                  handleFinalRangeChange={values => dispatch({ 
+                    type: 'BLADE_WIDTH_CHANGE', 
+                    payload: {
+                      name: key,
+                      values,
+                    } 
+                  })}           
+                />
+              </div>
             )
             break
           default:

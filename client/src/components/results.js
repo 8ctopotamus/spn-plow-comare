@@ -52,6 +52,7 @@ export default () => {
               plow={p}
               dispatch={dispatch}
               selected={selected}
+              numSelected={state.compare.length}
               key={p.ID}
             />
           )

@@ -1,32 +1,47 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { lighten } from 'polished'
+import { MdCompare } from 'react-icons/md'
 import ReactPlaceholder from 'react-placeholder';
 import "react-placeholder/lib/reactPlaceholder.css";
 import CONSTANTS from '../constants'
 
 const Result = styled.div`
-  background: ${props => props.selected ? lighten(.4, CONSTANTS.COLORS.SECONDARY) : 'white'};
-  border: 1px solid ${props => props.selected ? CONSTANTS.COLORS.SECONDARY : 'lightgrey'};
-  border-radius: 0px 0px 6px 6px;
+  background: ${props => props.selected ? lighten(0.42, CONSTANTS.COLORS.SECONDARY) : 'white'};
+  border: 1px solid ${props => props.selected ? CONSTANTS.COLORS.SECONDARY : lighten(0.3, CONSTANTS.COLORS.PRIMARY)};
+  border-radius: 0px 0px 8px 8px;
   cursor: pointer;
   padding: 12px;
   text-align: left;
 `;
 
-export default ({ plow, dispatch, selected }) => {
+const CompareFAB = styled.div`
+
+`
+
+export default ({ plow, dispatch, selected, numSelected }) => {
   const { acf, plow_categories } = plow
   const { blade_height_max, blade_width_expanded, } = acf
   const [ready, setReady] = useState(false)
 
+  const handleResultClick = () => {
+    if (numSelected <= 3 || selected ) {
+      dispatch({
+        type: 'TOGGLE_COMPARE',
+        payload: plow,
+      })
+    }
+  }
+
   return (
     <Result
       selected={selected}
-      onClick={() => dispatch({
-        type: 'TOGGLE_COMPARE',
-        payload: plow,
-      })}
+      onClick={handleResultClick}
     >
+      <CompareFAB>
+        <MdCompare/>
+      </CompareFAB>
+
       {plow_categories && plow_categories.length > 0 && (
         <span>{plow_categories[0]}</span>
       )}
@@ -41,11 +56,11 @@ export default ({ plow, dispatch, selected }) => {
       )}
       
       <img 
-        // src={`https://snowplownews.com/cm/images/${plow.acf.image}`}
         src="https://snowplownews.com/cm/images/meyer_SuperV.jpg"
+        // src={`https://snowplownews.com/cm/images/${plow.acf.image}`} // TODO
         onLoad={() => setReady(true)}
         alt={plow.post_name}
-        style={{ display: ready ? 'block': 'none' }}
+        style={{ display: ready ? 'block': 'none', margin: '0 auto' }}
       />
 
       {/* TODO: width should be ft in, ex: 8'2" */}

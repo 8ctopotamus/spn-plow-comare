@@ -86,11 +86,15 @@ function spn_plow_compare_load_shortcode_resources() {
 		}, $allPlows));
 
 		$manufacturers = [];
+		$bladeWidths = [];
 		foreach($allPlows as $p) {
 			if ($p->plow_categories) {
 				foreach( $p->plow_categories as $pCat) {
 					if (!in_array($pCat, $manufacturers)) {
 						$manufacturers[] = $pCat;
+					}
+					if ($p->acf['blade_width_expanded']) {
+						$bladeWidths[] = (int)$p->acf['blade_width_expanded'];
 					}
 				}
 			}

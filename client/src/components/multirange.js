@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { Range, getTrackBackground } from 'react-range';
+import { darken } from 'polished'
+import CONSTANTS from '../constants'
 
 const STEP = 0.1;
-const MIN = 0;
-const MAX = 100;
-const COLORS = ['#0C2960', '#276EF1', '#0C2960'];
+const COLORS = ['#0C2960', darken(0.1, CONSTANTS.COLORS.SECONDARY), '#0C2960'];
 
 class MultipleThumbs extends React.Component {
   state = {
-    values: [25, 50]
+    values: [this.props.min, this.props.max]
   };
+
   render() {
+    const { min, max } = this.props
+
     return (
       <div
         style={{
@@ -22,8 +25,8 @@ class MultipleThumbs extends React.Component {
         <Range
           values={this.state.values}
           step={STEP}
-          min={MIN}
-          max={MAX}
+          min={min}
+          max={max}
           onChange={values => this.setState({ values })}
           onFinalChange={this.props.handleFinalRangeChange}
           renderTrack={({ props, children }) => (
@@ -46,8 +49,8 @@ class MultipleThumbs extends React.Component {
                   background: getTrackBackground({
                     values: this.state.values,
                     colors: COLORS,
-                    min: MIN,
-                    max: MAX
+                    min: min,
+                    max: max
                   }),
                   alignSelf: 'center'
                 }}
