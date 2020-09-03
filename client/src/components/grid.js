@@ -4,13 +4,15 @@ import CONSTANTS from '../constants.js'
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-gap: 60px;
+  grid-template-columns: repeat(${({ cols }) => cols ? cols : 1}, 1fr);
+  grid-gap: ${({ gap }) => gap ? gap : 0};
   @media(max-width: ${CONSTANTS.BREAKPOINTS.SM}) {
-    .grid {
-      display: block;
-    }
+    display: block;
   }
 `;
 
-export default ({ children }) => <Grid>{ children }</Grid>
+export default ({ children, cols, gap }) => (
+  <Grid cols={cols} gap={gap}>
+    { children }
+  </Grid>
+)

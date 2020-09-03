@@ -1,14 +1,16 @@
 import React from 'react';
-import Grid from '../components/grid'
 import Sidebar from '../components/sidebar'
 import Filters from '../components/filters'
 import Results from '../components/results'
+import ContentWrap from '../components/content-wrap';
 
 export default () => (
   <>
     <Sidebar>
       <Filters/>
     </Sidebar>
-    <Results />
+    <ContentWrap>
+      <Results />
+    </ContentWrap>
   </>
 )

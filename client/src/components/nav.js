@@ -4,9 +4,10 @@ import AppContext from '../context'
 
 const Nav = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 50px;
+  background: #23448a;
 `
 
 const Icon = styled.span`

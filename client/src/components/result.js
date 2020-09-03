@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { lighten } from 'polished'
 import ReactPlaceholder from 'react-placeholder';
 import "react-placeholder/lib/reactPlaceholder.css";
+import CONSTANTS from '../constants'
 
 const Result = styled.div`
-  background: ${props => props.selected ? '#cd2653' : 'white'};
+  background: ${props => props.selected ? lighten(.4, CONSTANTS.COLORS.SECONDARY) : 'white'};
+  border: 1px solid ${props => props.selected ? CONSTANTS.COLORS.SECONDARY : 'lightgrey'};
+  border-radius: 0px 0px 6px 6px;
   cursor: pointer;
   padding: 12px;
   text-align: left;
@@ -27,7 +31,7 @@ export default ({ plow, dispatch, selected }) => {
         <span>{plow_categories[0]}</span>
       )}
       <h3 style={{marginTop: 0}}>{plow.post_name}</h3>
-      
+
       {!ready && (
         <ReactPlaceholder
           showLoadingAnimation={true}
