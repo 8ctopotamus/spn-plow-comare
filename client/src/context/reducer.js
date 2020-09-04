@@ -1,11 +1,5 @@
 import { LS_KEY } from './index'
 
-// const updateLocalStorage = state => {
-//   if (window && window.localStorage) {
-//     localStorage.setItem(LS_KEY, JSON.stringify(state))
-//   }
-// }
-
 export default (state, action) => {
   let updatedState
   let foundIdx
@@ -50,6 +44,17 @@ export default (state, action) => {
       updatedState = {
         ...state,
         search: action.payload,
+      }
+      return updatedState
+    case 'RESET':
+      updatedState = {
+        ...state,
+        search: '',
+        compare: [],
+        filters: Object.keys(state.filters).reduce((obj, key) => {
+          obj[key] = []
+          return obj
+        }, {})
       }
       return updatedState
     case 'CHANGE_VIEW':

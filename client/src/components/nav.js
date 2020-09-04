@@ -18,7 +18,7 @@ const Icon = styled.span`
   }
 `
 // background: ${darken(0.3), CONSTANTS.COLORS.PRIMARY}
-const Badge = styled.span`
+const Badge = styled.div`
   display: flex;
   align-items: center;
   border-radius: 8px;
@@ -26,9 +26,12 @@ const Badge = styled.span`
   color: white;
   cursor: pointer;
   margin-left: 12px;
-  &:hover ${Icon} {
-    &::after {
-      content: '⊗';
+  &:hover {
+    background: rgba(255,255,255,0.25);
+    ${Icon} {
+      &::after {
+        content: '⊗';
+      }
     }
   }
 `

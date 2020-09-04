@@ -1,16 +1,15 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-
 import { MdRestore } from 'react-icons/md'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
 import CONSTANTS from '../constants'
 
-const Heading = styled.h6`
+const Heading = styled.p`
   color: ${CONSTANTS.COLORS.SECONDARY};
   font-weight: bold;
   margin-top: 0;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
   text-transform: uppercase;
 `
 
@@ -20,11 +19,25 @@ const FieldGroup = styled.div`
   margin-bottom: 20px;
 `
 
+const Reset = styled.button`
+  cursor: pointer;
+  text-align: right;
+  width: auto;
+  &:hover {
+    background: rgba(255,255,255,.25);
+  }
+`
+
 export default () => {
   const { state, dispatch, controls } = useContext(AppContext)
 
   return (
     <>
+      <Reset onClick={() => dispatch({ type: 'RESET' })} type="button">
+        <MdRestore size="14px" />
+        {' '}
+        Reset
+      </Reset>
       <Heading>SEARCH</Heading>
       <input 
         onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 

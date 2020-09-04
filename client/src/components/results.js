@@ -18,10 +18,8 @@ export default () => {
       return p.post_name.toLowerCase().includes(keyword)
     })
     .filter(p => {
-      // TODO: works for now, improve later
       const matches = Object.entries(state.filters).map(filt => {
         let [key, values] = filt
-
         if (key === 'blade_width_expanded') {
           const [min, max] = values
           const pWidth = parseFloat(p.acf.blade_width_expanded)
@@ -29,12 +27,10 @@ export default () => {
             return true
           }
         }
-
         if (key === 'manufacturers' && p.plow_categories && p.plow_categories.length > 0) {
           const match = p.plow_categories.find(cat => values.includes(cat))
           if (match) return true
         } 
-
         return values.length === 0 
           ? true : values.includes(p.acf[key])
       })
