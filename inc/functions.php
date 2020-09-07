@@ -96,7 +96,12 @@ function delete_all_plows(){
 function upload_plow_data() {
   delete_all_plows();
   $csv = plugin_dir_url( __DIR__ ) . 'data/plows.csv';
+  
   $debug = [];
+  
+  // store a map of coldfulsion IDs and new post Ids. 
+  // Ex: [cfId => wpId]
+  $idMap = [];
 
   // create an index of manufacturer slugs
   $maufacturers = spn_get_manufacturers_data();
@@ -138,7 +143,6 @@ function upload_plow_data() {
           $mfg_id = $col;
           $match = $v[$mfg_id];
           if ($match) {
-            $debug[] = $match;
             $manuSlug =$match;
             $acfData[$key] = $match;
             break;
@@ -152,6 +156,8 @@ function upload_plow_data() {
 
     // create new plow post
     $newPostId = wp_insert_post( $args );
+
+    $idMap[$acfData['id']] = $newPostId;
 
     // attach ACF meta_data
     foreach($acfData as $key => $val) {
@@ -179,6 +185,41 @@ function upload_plow_data() {
     $count++;
   }
   fclose($file);
+
+
+  $debug[] = $idMap;
+  $debug[] = '-------------------';
+
+  // Find truck_sizes by old coldfusion ID
+  $csv = plugin_dir_url( __DIR__ ) . 'data/truck_sizes_lu.csv';
+  $file = fopen($csv,"r");
+  $count = 0;
+  $headers = [];
+  while( !feof($file) ) {
+    $row = fgetcsv($file);
+    // set headers
+    if ($count === 0) {
+      $headers = $row;
+      $count++;
+      continue; // skip to body of data
+    }
+    $colCount = 0;
+    $postId = null;
+    foreach($row as $col) {
+      $key = $headers[$colCount];
+      // $debug[] = $key;
+      if ($key === 'id') {
+        $debug[] = $col . '=' . $idMap[$col];
+        $postId = $idMap[$col];
+      } elseif ($key === 'size') {
+        wp_set_object_terms($postId, $col, 'truck_size', true);
+      }
+      $colCount++;
+    }
+    $count++;
+  }
+  fclose($file);
+
   echo json_encode(['success' => true, 'debug' => $debug]);
   exit();
 }

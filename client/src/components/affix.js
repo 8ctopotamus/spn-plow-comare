@@ -36,9 +36,10 @@ class Affix extends Component {
 
   handleScroll = () => {
     const affix = this.state.affix
-    console.log(200)
     const offset = this.props.offset
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+
+    console.log(offset)
 
     if (!affix && scrollTop >= offset) {
       this.setState({
