@@ -14,9 +14,19 @@ function spn_get_plow_data() {
       $p->acf = get_fields();
       $p->plow_categories = [];
       $plowCatsTax = get_the_terms($p->ID, 'plow_categories');
-      foreach ($plowCatsTax as $cat) {
-        $p->plow_categories[] = $cat->slug;
+      if ($plowCatsTax) {
+        foreach ($plowCatsTax as $cat) {
+          $p->plow_categories[] = $cat->slug;
+        }
       }
+      $p->truck_size = [];
+      $truckSizes = get_the_terms($p->ID, 'truck_size');
+      if ($truckSizes) {        
+        foreach ($truckSizes as $size) {
+          $p->truck_size[] = $size->name;
+        }
+      }
+
       $data[] = $p;
     }
   } 

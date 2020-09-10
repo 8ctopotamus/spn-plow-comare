@@ -61,13 +61,18 @@ function spn_plow_compare_load_shortcode_resources() {
 				}
 			}
 		}
+
+		$truck_size = array_unique(array_map(function($size) {
+			return $size->name;
+		}, get_terms('truck_size')));
 		
 		wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
 			'plows' => $allPlows,
 			'controls' => [
+				'truck_size' => $truck_size,
 				'plow_type' => $plowTypes,
-				'manufacturers' => $manufacturers,
 				'blade_width_expanded' => $bladeWidths,
+				'manufacturers' => $manufacturers,
 			],
       'site_url' => site_url(),
       'admin_ajax_url' => esc_url( admin_url('admin-post.php')),

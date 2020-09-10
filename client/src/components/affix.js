@@ -39,8 +39,6 @@ class Affix extends Component {
     const offset = this.props.offset
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
 
-    console.log(offset)
-
     if (!affix && scrollTop >= offset) {
       this.setState({
         affix: true,

@@ -4,15 +4,13 @@ import { MdFilterList, MdClose } from 'react-icons/md'
 import CONSTANTS from '../constants'
 
 const Sidebar = styled.div`
-  height: 100%;
-  width: auto;
   position: absolute;
   top: 0;
   left: 0;
   width: ${CONSTANTS.NAV_WIDTH};
   background: ${CONSTANTS.COLORS.PRIMARY};
   color: white;
-  height: 100%;
+  height: auto;
   z-index: 100;
   padding: 82px 15px;
   ul {

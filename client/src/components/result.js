@@ -15,14 +15,16 @@ const Result = styled.div`
   text-align: left;
 `;
 
-const CompareFAB = styled.div`
+// const CompareFAB = styled.div`
 
-`
+// `
 
 export default ({ plow, dispatch, selected, numSelected }) => {
   const { acf, plow_categories } = plow
   const { blade_height_max, blade_width_expanded, } = acf
   const [ready, setReady] = useState(false)
+
+  console.log(plow)
 
   const handleResultClick = () => {
     if (numSelected <= 3 || selected ) {
@@ -38,9 +40,9 @@ export default ({ plow, dispatch, selected, numSelected }) => {
       selected={selected}
       onClick={handleResultClick}
     >
-      <CompareFAB>
+      {/* <CompareFAB>
         <MdCompare/>
-      </CompareFAB>
+      </CompareFAB> */}
 
       {plow_categories && plow_categories.length > 0 && (
         <span>{plow_categories[0]}</span>

@@ -31,6 +31,10 @@ export default () => {
           const match = p.plow_categories.find(cat => values.includes(cat))
           if (match) return true
         } 
+        if (key === 'truck_size' && p.truck_size && p.truck_size.length > 0) {
+          const match = p.truck_size.find(size => values.includes(size))
+          if (match) return true
+        } 
         return values.length === 0 
           ? true : values.includes(p.acf[key])
       })
