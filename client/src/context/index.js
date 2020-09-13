@@ -9,6 +9,7 @@ const filters = Object.keys(WP_DATA.controls)
 
 const AppContext = createContext({
   view: 'SEARCH',
+  sidebarOpen: true,
   search: '',
   filters,
   compare: [],

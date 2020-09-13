@@ -9,7 +9,7 @@ const Sticky = styled.div`
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 999;
   }
 `
 
@@ -36,7 +36,7 @@ class Affix extends Component {
 
   handleScroll = () => {
     const affix = this.state.affix
-    const offset = this.props.offset
+    const offset = this.props.offset || 0
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
 
     if (!affix && scrollTop >= offset) {
@@ -55,9 +55,10 @@ class Affix extends Component {
   render() {
     const affix = this.state.affix ? 'affix' : ''
     const { className, ...props } = this.props
+    console.log(this.props)
 
     return (
-      <Sticky {...props} className={`${className || ''} ${affix}`}>
+      <Sticky {...this.props} className={`${className || ''} ${affix}`} style={{top: props.offset ? props.offset : 0}}>
         {this.props.children}
       </Sticky>
     )

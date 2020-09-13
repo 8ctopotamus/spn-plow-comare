@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react'
+import styled from 'styled-components'
 import Sidebar from '../components/sidebar'
 import Controls from '../components/controls'
 import Results from '../components/results'
 import ContentWrap from '../components/content-wrap';
 import Affix from '../components/affix'
+import AppContext from '../context'
+import CONSTANTS from '../constants'
 
-export default () => (
-  <>
-    <Sidebar>
-      <Affix className="some-cool-element" id="lalala" offset={200}>
-        <Controls/>
-      </Affix>
-    </Sidebar>
-    <ContentWrap>
-      <Results />
-    </ContentWrap>
-  </>
-)
+// grid-template-columns: ${({sidebarOpen}) => sidebarOpen ? `1fr 1fr` : '1fr'};
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  @media (max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    display: block;
+  }
+`
+
+export default () => {
+  const { state } = useContext(AppContext)
+  return (
+    <Grid sidebarOpen={state.sidebarOpen}>
+      <Sidebar>
+        <Affix id="LALALALA">
+          <Controls/>
+        </Affix>
+      </Sidebar>
+      <ContentWrap>
+        <Results />
+      </ContentWrap>
+    </Grid>
+  )
+}

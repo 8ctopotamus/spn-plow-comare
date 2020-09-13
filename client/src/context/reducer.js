@@ -62,11 +62,11 @@ export default (state, action) => {
         ...state,
         view: state.view === 'COMPARE' ? 'SEARCH' : 'COMPARE',
       }
-    case 'GET_LOCALSTORAGE':
-      if (window && window.localStorage && localStorage.getItem(LS_KEY)) {
-        return JSON.parse(localStorage.getItem(LS_KEY))
+    case 'SET_SIDEBAR':
+      return {
+        ...state,
+        sidebarOpen: action.payload,
       }
-      break;
     default:
       return state
   }

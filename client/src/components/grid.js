@@ -6,6 +6,9 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(${({ cols }) => cols ? cols : 1}, 1fr);
   grid-gap: ${({ gap }) => gap ? gap : 0};
+  @media(max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    grid-template-columns: 1fr 1fr;
+  }
   @media(max-width: ${CONSTANTS.BREAKPOINTS.SM}) {
     display: block;
   }

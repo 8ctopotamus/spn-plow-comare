@@ -43,7 +43,7 @@ export default () => {
 
   return (
     <Results>
-      <Grid cols={3} gap="30px">
+      <Grid cols={4} gap="30px">
         { filtered.map(p => {
           const selected = state.compare
             .find(c => c.ID === p.ID) ? true : false

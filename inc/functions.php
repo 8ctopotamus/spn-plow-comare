@@ -84,8 +84,6 @@ function delete_all_plows(){
 
 // find media attachment id by filename
 function spn_get_attachement_id($val, $id) {
-  
-
   $imgUrlParts = explode('/', $val);
   $imgFileName = $imgUrlParts[count($imgUrlParts) - 1];
   $foundId = false;
@@ -173,6 +171,7 @@ function upload_plow_data() {
 
     // attach ACF meta_data
     foreach($acfData as $key => $val) {
+      if (!val) continue;
       if ($key === 'image' && $val) {
         $found = spn_get_attachement_id($val, $newPostId);
         if (!$found) continue;

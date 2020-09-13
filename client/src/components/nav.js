@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
+import { MdFilterList, MdClose } from 'react-icons/md'
 import { darken } from 'polished'
 import AppContext from '../context'
 import CONSTANTS from '../constants'
@@ -9,6 +10,17 @@ const Nav = styled.div`
   justify-content: flex-end;
   align-items: center;
   background: #23448a;
+`
+
+const SidebarToggle = styled.div`
+  display: none;
+  cursor: pointer;
+  svg { fill: white; }
+  margin-left: 15px;
+  margin-right: auto;
+  @media (max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    display: block;
+  }
 `
 
 const Icon = styled.span`
@@ -33,6 +45,9 @@ const Badge = styled.div`
         content: '⊗';
       }
     }
+  }
+  @media(max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    display: none;
   }
 `
 
@@ -63,6 +78,11 @@ export default () => {
 
   return (
     <Nav>
+      <SidebarToggle onClick={() => dispatch({type: 'SET_SIDEBAR', payload: !state.sidebarOpen})}>
+        { state.sidebarOpen 
+          ? <MdClose size="30" />
+          : <MdFilterList size="30" /> }
+      </SidebarToggle>
       { state.compare.map(p => (
         <Badge
           onClick={() => dispatch({

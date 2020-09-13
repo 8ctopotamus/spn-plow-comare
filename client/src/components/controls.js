@@ -11,6 +11,7 @@ const Heading = styled.p`
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 5px;
+  padding: 15px;
   text-transform: uppercase;
 `
 
@@ -18,6 +19,7 @@ const Reset = styled.button`
   cursor: pointer;
   text-align: right;
   width: auto;
+  margin: 15px;
   &:hover {
     background: rgba(255,255,255,.25);
   }
@@ -28,19 +30,16 @@ export default () => {
 
   return (
     <>
-      <Reset onClick={() => dispatch({ type: 'RESET' })} type="button">
-        <MdRestore size="14px" />
-        {' '}
-        Reset
-      </Reset>
-      <Heading>SEARCH</Heading>
-      <input 
-        onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
-        value={state.search}
-        placeholder="Keyword search" 
-        type="search"
-        style={{ marginBottom: 15 }}
-      />
+      <div style={{padding: '0 15px'}}>
+        <Heading>SEARCH</Heading>
+        <input 
+          onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
+          value={state.search}
+          placeholder="Keyword search" 
+          type="search"
+          style={{ marginBottom: 15 }}
+        />
+      </div>
       {Object.entries(controls).map(entry => {
         const [key, val] = entry
         let Control
@@ -83,7 +82,12 @@ export default () => {
             {Control}
           </ControlGroup>
         ) : null
-      })}      
+      })}
+      <Reset onClick={() => dispatch({ type: 'RESET' })} type="button">
+        <MdRestore size="14px" />
+        {' '}
+        Reset
+      </Reset>      
     </>
   )
 }
