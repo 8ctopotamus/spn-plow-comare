@@ -153,8 +153,8 @@ function upload_plow_data() {
           $mfg_id = $col;
           $match = $v[$mfg_id];
           if ($match) {
-            $manuSlug =$match;
-            $acfData[$key] = $match;
+            $manuSlug = $match;
+            $acfData[$key] = $mfg_id;
             break;
           }
         }

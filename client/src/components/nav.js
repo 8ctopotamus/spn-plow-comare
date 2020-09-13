@@ -57,8 +57,8 @@ export default () => {
   const notEnoughPlows = numLoaded < 2
   const isCompareView = state.view === 'COMPARE'
   const buttonText = isCompareView
-    ? `Back to Search`
-    : `Compare ${numLoaded} plow${numLoaded === 1 ? '' : 's'}`
+    ? `PLOW SEARCH`
+    : `COMPARE ${numLoaded} PLOW${numLoaded === 1 ? '' : 's'}`
 
   useEffect(() => { 
     if (isCompareView && notEnoughPlows)
@@ -72,6 +72,7 @@ export default () => {
           ? <MdClose size="30" />
           : <MdFilterList size="30" /> }
       </SidebarToggle>
+
       { state.compare.map(p => (
         <Badge
           onClick={() => dispatch({
@@ -81,6 +82,7 @@ export default () => {
           key={p.ID}
         >
           {p.post_name}
+          {' '}
           <MdRemoveCircleOutline />
         </Badge>
       )) }

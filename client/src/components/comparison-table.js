@@ -1,16 +1,18 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { MdAttachMoney } from 'react-icons/md'
+import Meter from './meter'
 import AppContext from '../context'
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: ${({colCount}) => `repeat(${colCount}, 1fr)`};
   & > div {
-    background: white;
     border: .5px solid black;
     padding: 12px;
   }
 `
+  
 const specsToShow = [
   'Availability',
   'Plow Type',
@@ -48,11 +50,16 @@ export default () => {
   const { state } = useContext(AppContext)
   const colCount = state.compare.length + 1
   console.log(state.compare)
+  
   return (
     <>
       <Grid colCount={colCount}>
         <div><h2>Snow plow news</h2></div>
-        {state.compare.map(({ post_title, ID }) => <div key={ID}>{post_title}</div>)}
+        {state.compare.map(({ post_title, ID }) => (
+          <div key={ID}>
+            <h3>{post_title}</h3>
+          </div>
+        ))}
       </Grid>
       <Grid colCount={colCount}>
         <div>Does it Fit?</div>
@@ -64,42 +71,59 @@ export default () => {
       </Grid>
       <Grid colCount={colCount}>
         <div>Where To Buy?</div>
-        {state.compare.map(({ ID }) => (
-          <div key={ID}>
-            Find a Sno-Way Dealer near you.
-            {/* <form name="findDealerByBrand" action="https://dealers.snowplownews.com?bd=1" method="post" target="_blank">
-              <input type="hidden" name="mfg_id" value="18"/>
-              <input type="hidden" name="distance" value="50"/>
-              <input type="hidden" name="locationsubmitted" value="1"/>
-              <input type="text" name="postalcode" value="" placeholder="Zipcode"/> 
-              <input type="submit" value="Find Dealers"/>
-            </form> */}
-          </div>
-        ))}
+        {state.compare.map(({ ID, acf }) => {
+          const { mfg_id } = acf
+          return (
+            <div key={ID}>
+              Find a Sno-Way Dealer near you.
+              <form name="findDealerByBrand" action="//dealers.snowplownews.com?bd=1" method="post" target="_blank">
+                {mfg_id && ( <input type="hidden" name="mfg_id" value={mfg_id} /> )}
+                <input type="hidden" name="distance" value="50"/>
+                <input type="hidden" name="locationsubmitted" value="1"/>
+                <input type="text" name="postalcode" placeholder="Zipcode"/> 
+                <input type="submit" value="Find Dealers"/>
+              </form>
+            </div>
+          )
+        })}
       </Grid>
       <Grid colCount={colCount}>
         <div>Price</div>
-        {state.compare.map(({ acf, ID }) => (
-          <div key={ID}>
-            {acf.price}
-          </div>
-        ))}
+        {state.compare.map(({ acf, ID }) => {
+          const { price } = acf
+          const priceNum = price && parseInt(price)
+          console.log(priceNum)
+          return (
+            <div key={ID}>
+              {priceNum && Array(priceNum)
+                .fill()
+                .map(i => <MdAttachMoney size={'25px'} key={i} />)}
+            </div>
+          )
+        })}
       </Grid>
       <Grid colCount={colCount}>
         <div>Moving Capacity</div>
-        {state.compare.map(({ acf, ID }) => (
-          <div key={ID}>
-            {acf.moving_capacity}
-          </div>
-        ))}
+        {state.compare.map(({ acf, ID }) => {
+          const { moving_capacity } = acf
+          const moving_capacityNum = moving_capacity && parseInt(moving_capacity)
+          console.log(moving_capacityNum)
+          return (
+            <div key={ID}>
+              {moving_capacityNum && Array(moving_capacityNum)
+                .fill()
+                .map(i => <MdAttachMoney size={'25px'} key={i} />)}
+            </div>
+          )
+        })}
       </Grid>
       <Grid colCount={colCount}>
         <div>SPN Rating</div>
         {state.compare.map(({ acf, ID }) => (
-          <div key={ID}>
-            {acf.spn_rank}
-          </div>
-        ))}
+          <Meter num={acf.spn_rank} key={ID}>
+            <MdAttachMoney size={'25px'} />
+          </Meter>
+        ) )}
       </Grid>
       <Grid colCount={colCount}>
         <div>Warranty</div>
@@ -147,7 +171,11 @@ export default () => {
       {/* SPECS */}
       <Grid colCount={colCount}>
         <div><h2>Specs</h2></div>
-        {state.compare.map(({ post_title, ID }) => <div key={ID}>{post_title}</div>)}
+        {state.compare.map(({ post_title, ID }) => (
+          <div key={ID}>
+            <h3>{post_title}</h3>
+          </div>
+        ))}
       </Grid>
 
       {specsToShow.map(spec => (
