@@ -171,7 +171,8 @@ function upload_plow_data() {
 
     // attach ACF meta_data
     foreach($acfData as $key => $val) {
-      if (!val) continue;
+      if (!$val) continue; // skip the empties
+
       if ($key === 'image' && $val) {
         $found = spn_get_attachement_id($val, $newPostId);
         if (!$found) continue;

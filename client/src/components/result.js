@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { darken, lighten } from 'polished'
-import { MdCompare } from 'react-icons/md'
+import { MdAddCircleOutline, MdRemoveCircleOutline } from 'react-icons/md'
 import ReactPlaceholder from 'react-placeholder';
 import "react-placeholder/lib/reactPlaceholder.css";
 import Grid from './grid'
@@ -22,15 +22,38 @@ const Result = styled.div`
 `;
 
 const GridItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding-left: 12px;
   padding-right: 12px;
 `
 
 const CompareFAB = styled.div`
-  background: ${({selected}) => selected ? darken(0.1, CONSTANTS.COLORS.SECONDARY) : lighten(0.1, CONSTANTS.COLORS.PRIMARY)};
   color: ${({selected}) => selected ? CONSTANTS.COLORS.PRIMARY : CONSTANTS.COLORS.SECONDARY};
   margin-bottom: 12px;
+  font-size: small;
+  font-weight: bold;
   padding: 4px 12px;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: ${({selected}) => selected ? darken(0.1, CONSTANTS.COLORS.SECONDARY) : lighten(0.1, CONSTANTS.COLORS.PRIMARY)};
+    transform-origin: 100% 0;
+    transform: skew(-45deg);
+    z-index: -1;
+  }
+`
+
+const Image = styled.img`
+  mix-blend-mode: ${({selected}) => selected ? 'multiply' : 'none'}
 `
 
 export default ({ plow, dispatch, selected, numSelected }) => {
@@ -52,11 +75,9 @@ export default ({ plow, dispatch, selected, numSelected }) => {
       selected={selected}
       onClick={handleResultClick}
     >
-      <CompareFAB selected={selected}>
-        <MdCompare/>
-        <span>
-          {selected ? 'REMOVE' : 'COMPARE'}
-        </span>
+      <CompareFAB selected={selected}>        
+        {selected ? <MdRemoveCircleOutline /> : <MdAddCircleOutline />}
+        <span>{selected ? ' ADDED' : ' COMPARE'}</span>
       </CompareFAB>
 
       <Grid cols={2} gap={12}>
@@ -77,13 +98,15 @@ export default ({ plow, dispatch, selected, numSelected }) => {
               style={{width: '100%', height: 180}}
             />
           )}
-          
-          <img 
-            src={plow.acf.image.url}
-            onLoad={() => setReady(true)}
-            alt={plow.post_name}
-            style={{ display: ready ? 'block': 'none', margin: '0 auto' }}
-          />
+          {plow.acf?.image?.url && (
+            <Image 
+              selected={selected}
+              src={plow.acf.image.url}
+              onLoad={() => setReady(true)}
+              alt={plow.post_name}
+              style={{ display: ready ? 'block': 'none', margin: '0 auto' }}
+            />
+          )}
         </GridItem>
       </Grid>
     </Result>

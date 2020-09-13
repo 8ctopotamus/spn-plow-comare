@@ -55,7 +55,6 @@ class Affix extends Component {
   render() {
     const affix = this.state.affix ? 'affix' : ''
     const { className, ...props } = this.props
-    console.log(this.props)
 
     return (
       <Sticky {...this.props} className={`${className || ''} ${affix}`} style={{top: props.offset ? props.offset : 0}}>

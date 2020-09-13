@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { MdFilterList, MdClose } from 'react-icons/md'
+import { MdFilterList, MdClose, MdRemoveCircleOutline } from 'react-icons/md'
 import { darken } from 'polished'
 import AppContext from '../context'
 import CONSTANTS from '../constants'
@@ -23,12 +23,6 @@ const SidebarToggle = styled.div`
   }
 `
 
-const Icon = styled.span`
-  margin-left: 6px;
-  &::after {
-    content: '⊚';
-  }
-`
 // background: ${darken(0.3), CONSTANTS.COLORS.PRIMARY}
 const Badge = styled.div`
   display: flex;
@@ -40,11 +34,6 @@ const Badge = styled.div`
   margin-left: 12px;
   &:hover {
     background: rgba(255,255,255,0.25);
-    ${Icon} {
-      &::after {
-        content: '⊗';
-      }
-    }
   }
   @media(max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
     display: none;
@@ -92,7 +81,7 @@ export default () => {
           key={p.ID}
         >
           {p.post_name}
-          <Icon />
+          <MdRemoveCircleOutline />
         </Badge>
       )) }
 

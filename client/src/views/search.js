@@ -22,7 +22,7 @@ export default () => {
   return (
     <Grid sidebarOpen={state.sidebarOpen}>
       <Sidebar>
-        <Affix id="LALALALA">
+        <Affix offset={80}>
           <Controls/>
         </Affix>
       </Sidebar>
