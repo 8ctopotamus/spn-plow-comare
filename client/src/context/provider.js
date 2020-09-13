@@ -18,7 +18,7 @@ export default ({ children }) => {
   // }), [])
 
   return (
-    <AppContext.Provider value={{state, dispatch, plows, controls}}>
+    <AppContext.Provider value={{ state, dispatch, plows, controls }}>
       { children }
     </AppContext.Provider>
   )

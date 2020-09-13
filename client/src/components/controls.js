@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { MdRestore } from 'react-icons/md'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
+import ControlGroup from './control-group'
 import CONSTANTS from '../constants'
 
 const Heading = styled.p`
@@ -11,12 +12,6 @@ const Heading = styled.p`
   margin-top: 0;
   margin-bottom: 5px;
   text-transform: uppercase;
-`
-
-const FieldGroup = styled.div`
-  display:flex;
-  flex-direction: column;
-  margin-bottom: 20px;
 `
 
 const Reset = styled.button`
@@ -84,10 +79,9 @@ export default () => {
         }
 
         return val !== '' ? (
-          <FieldGroup key={key}>
-            <Heading>{key}</Heading>
+          <ControlGroup key={key} heading={<Heading>{key}</Heading>}>
             {Control}
-          </FieldGroup>
+          </ControlGroup>
         ) : null
       })}      
     </>

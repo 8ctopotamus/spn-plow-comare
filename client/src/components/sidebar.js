@@ -10,7 +10,7 @@ const Sidebar = styled.div`
   width: ${CONSTANTS.NAV_WIDTH};
   background: ${CONSTANTS.COLORS.PRIMARY};
   color: white;
-  height: auto;
+  height: 100%;
   z-index: 100;
   padding: 82px 15px;
   ul {

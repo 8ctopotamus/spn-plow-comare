@@ -55,27 +55,6 @@ function spn_get_manufacturers_data() {
 }
 
 
-// find media attachment id by filename
-function spn_get_attachement_id($key, $val, $id) {
-  $imgUrlParts = explode('/', $val);
-  $imgFileName = $imgUrlParts[count($imgUrlParts) - 1];
-  $foundId = false;
-  $media_query = new WP_Query(
-    array(
-      'post_type' => 'attachment',
-      'post_status' => 'inherit',
-      'posts_per_page' => -1,
-    )
-  );
-  foreach ($media_query->posts as $post) {
-    if (strpos($val, $post->post_title) !== false) {
-      $foundId = $post->ID;
-      break;
-    }
-  }
-  return $foundId;
-}
-
 
 /*
  * CSV Import Plows
@@ -101,6 +80,29 @@ function delete_all_plows(){
     )
   );
   return $result !== false;
+}
+
+// find media attachment id by filename
+function spn_get_attachement_id($val, $id) {
+  
+
+  $imgUrlParts = explode('/', $val);
+  $imgFileName = $imgUrlParts[count($imgUrlParts) - 1];
+  $foundId = false;
+  $media_query = new WP_Query(
+    array(
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'posts_per_page' => -1,
+    )
+  );
+  foreach ($media_query->posts as $post) {
+    if ( strpos( strtolower($post->guid), strtolower($val) ) !== false ) {
+      $foundId = $post->ID;
+      break;
+    }
+  }
+  return $foundId;
 }
 
 function upload_plow_data() {
@@ -171,6 +173,11 @@ function upload_plow_data() {
 
     // attach ACF meta_data
     foreach($acfData as $key => $val) {
+      if ($key === 'image' && $val) {
+        $found = spn_get_attachement_id($val, $newPostId);
+        if (!$found) continue;
+        $val = $found;
+      }
       // ToDo: blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
     }
@@ -179,26 +186,10 @@ function upload_plow_data() {
     if ($manuSlug) {
       wp_set_object_terms($newPostId, $manuSlug, 'plow_categories', true);
     }
-    
-    // Note for later: Example of populating images fields
-    // foreach($acfData as $key => $val) {
-    //   $acfField = acf_get_field($key);
-    //   if ($acfField['type'] === 'image' || $acfField['type'] === 'file') {
-    //     $found = advctrls_get_attachement_id($key, $val, $newPostId);
-    //     if ($found) {
-    //       $val = $found;
-    //     }
-    //   }
-    //   update_field($key, $val, $newPostId);
-    // }
 
     $count++;
   }
   fclose($file);
-
-
-  $debug[] = $idMap;
-  $debug[] = '-------------------';
 
   // Find truck_sizes by old coldfusion ID
   $csv = plugin_dir_url( __DIR__ ) . 'data/truck_sizes_lu.csv';
@@ -217,9 +208,7 @@ function upload_plow_data() {
     $postId = null;
     foreach($row as $col) {
       $key = $headers[$colCount];
-      // $debug[] = $key;
       if ($key === 'id') {
-        $debug[] = $col . '=' . $idMap[$col];
         $postId = $idMap[$col];
       } elseif ($key === 'size') {
         wp_set_object_terms($postId, $col, 'truck_size', true);

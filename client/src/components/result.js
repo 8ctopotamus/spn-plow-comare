@@ -24,10 +24,8 @@ export default ({ plow, dispatch, selected, numSelected }) => {
   const { blade_height_max, blade_width_expanded, } = acf
   const [ready, setReady] = useState(false)
 
-  console.log(plow)
-
   const handleResultClick = () => {
-    if (numSelected <= 3 || selected ) {
+    if (numSelected <= 4 || selected ) {
       dispatch({
         type: 'TOGGLE_COMPARE',
         payload: plow,
@@ -58,8 +56,7 @@ export default ({ plow, dispatch, selected, numSelected }) => {
       )}
       
       <img 
-        src="https://snowplownews.com/cm/images/meyer_SuperV.jpg"
-        // src={`https://snowplownews.com/cm/images/${plow.acf.image}`} // TODO
+        src={plow.acf.image.url}
         onLoad={() => setReady(true)}
         alt={plow.post_name}
         style={{ display: ready ? 'block': 'none', margin: '0 auto' }}
