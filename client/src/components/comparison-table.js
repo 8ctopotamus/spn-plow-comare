@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { MdAttachMoney } from 'react-icons/md'
-import Meter from './meter'
+import Repeatable from './repeatable'
 import AppContext from '../context'
 
 const Grid = styled.div`
@@ -89,40 +89,26 @@ export default () => {
       </Grid>
       <Grid colCount={colCount}>
         <div>Price</div>
-        {state.compare.map(({ acf, ID }) => {
-          const { price } = acf
-          const priceNum = price && parseInt(price)
-          console.log(priceNum)
-          return (
-            <div key={ID}>
-              {priceNum && Array(priceNum)
-                .fill()
-                .map(i => <MdAttachMoney size={'25px'} key={i} />)}
-            </div>
-          )
-        })}
+        {state.compare.map(({ acf, ID }) => (
+          <Repeatable num={acf.price} key={ID}>
+            <MdAttachMoney size={'25px'} />
+          </Repeatable>
+        ) )}
       </Grid>
       <Grid colCount={colCount}>
         <div>Moving Capacity</div>
-        {state.compare.map(({ acf, ID }) => {
-          const { moving_capacity } = acf
-          const moving_capacityNum = moving_capacity && parseInt(moving_capacity)
-          console.log(moving_capacityNum)
-          return (
-            <div key={ID}>
-              {moving_capacityNum && Array(moving_capacityNum)
-                .fill()
-                .map(i => <MdAttachMoney size={'25px'} key={i} />)}
-            </div>
-          )
-        })}
+        {state.compare.map(({ acf, ID }) => (
+          <Repeatable num={acf.moving_capacity} key={ID}>
+            <MdAttachMoney size={'25px'} />
+          </Repeatable>
+        ))}
       </Grid>
       <Grid colCount={colCount}>
         <div>SPN Rating</div>
         {state.compare.map(({ acf, ID }) => (
-          <Meter num={acf.spn_rank} key={ID}>
+          <Repeatable num={Math.floor(acf.spn_rank/100*10)} key={ID}>
             <MdAttachMoney size={'25px'} />
-          </Meter>
+          </Repeatable>
         ) )}
       </Grid>
       <Grid colCount={colCount}>
