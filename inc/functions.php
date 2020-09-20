@@ -11,6 +11,7 @@ function spn_get_plow_data() {
     while ( $the_query->have_posts() ) {
       $the_query->the_post();
       $p = get_post();
+      $p->featured_image = get_the_post_thumbnail_url();
       $p->acf = get_fields();
       $p->plow_categories = [];
       $plowCatsTax = get_the_terms($p->ID, 'plow_categories');
@@ -158,6 +159,8 @@ function upload_plow_data() {
             break;
           }
         }
+      } elseif ($key === 'current_model') {
+        $acfData[$key] = (bool)$col;
       } else {
         $acfData[$key] = $col;
       }
@@ -171,7 +174,7 @@ function upload_plow_data() {
 
     // attach ACF meta_data
     foreach($acfData as $key => $val) {
-      if (!$val) continue; // skip the empties
+      if (!$val || !$val === '') continue; // skip the empties
 
       if ($key === 'image' && $val) {
         $found = spn_get_attachement_id($val, $newPostId);

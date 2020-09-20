@@ -98,7 +98,7 @@ export default ({ plow, dispatch, selected, numSelected }) => {
               style={{width: '100%', height: 180}}
             />
           )}
-          {plow.acf?.image?.url && (
+          {plow.acf.image && (
             <Image 
               selected={selected}
               src={plow.acf.image.url}

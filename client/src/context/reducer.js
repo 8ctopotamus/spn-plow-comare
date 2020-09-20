@@ -1,5 +1,3 @@
-import { LS_KEY } from './index'
-
 export default (state, action) => {
   let updatedState
   let foundIdx
@@ -33,7 +31,7 @@ export default (state, action) => {
       name = action.payload.name
       value = action.payload.value
       filters = !state.filters[name].includes(value)
-        ? {...state.filters, [name]: [...state.filters[name], value] }// add it
+        ? {...state.filters, [name]: [...state.filters[name], value] } // add it
         : {...state.filters, [name]: state.filters[name].filter(v => v !== value)} // remove it
       updatedState = {
         ...state,

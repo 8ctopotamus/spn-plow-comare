@@ -1,6 +1,6 @@
 import React from 'react'
-import ComparisonTable from '../components/comparison-table'
+import ComparisonChart from '../components/comparison-chart'
 
 export default () => (
-  <ComparisonTable/>
+  <ComparisonChart/>
 )

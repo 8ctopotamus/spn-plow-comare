@@ -1,14 +1,16 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { MdAttachMoney } from 'react-icons/md'
+import { MdAttachMoney, MdOndemandVideo, MdPictureAsPdf } from 'react-icons/md'
+import { IoMdSnow } from 'react-icons/io'
 import Repeatable from './repeatable'
 import AppContext from '../context'
+import CONSTANTS from '../constants'
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: ${({colCount}) => `repeat(${colCount}, 1fr)`};
   & > div {
-    border: .5px solid black;
+    border: .5px solid ${CONSTANTS.COLORS.PRIMARY};
     padding: 12px;
   }
 `
@@ -19,11 +21,11 @@ const specsToShow = [
   'Paint',
   'E-Coat Primer',
   'Controls Style',
-  'Control Type',
+  'Controls Type',
   'Mount',
   'Snow Deflector',
   'Down Pressure',
-  'Closed Loop Electrical',
+  'Closed Loop Electric',
   'LED Lights',
   'Blade Width',
   'Angled Blade Width',
@@ -52,11 +54,12 @@ export default () => {
   console.log(state.compare)
   
   return (
-    <>
+    <div className="comparison-chart">
       <Grid colCount={colCount}>
         <div><h2>Snow plow news</h2></div>
-        {state.compare.map(({ post_title, ID }) => (
+        {state.compare.map(({ post_title, ID, featured_image }) => (
           <div key={ID}>
+            {featured_image && <img src={featured_image} alt={post_title} />}
             <h3>{post_title}</h3>
           </div>
         ))}
@@ -98,8 +101,8 @@ export default () => {
       <Grid colCount={colCount}>
         <div>Moving Capacity</div>
         {state.compare.map(({ acf, ID }) => (
-          <Repeatable num={acf.moving_capacity} key={ID}>
-            <MdAttachMoney size={'25px'} />
+          <Repeatable num={acf.moving_capacity}  key={ID}>
+            <IoMdSnow size={'25px'} />
           </Repeatable>
         ))}
       </Grid>
@@ -107,7 +110,7 @@ export default () => {
         <div>SPN Rating</div>
         {state.compare.map(({ acf, ID }) => (
           <Repeatable num={Math.floor(acf.spn_rank/100*10)} key={ID}>
-            <MdAttachMoney size={'25px'} />
+            <IoMdSnow size={'25px'} />
           </Repeatable>
         ) )}
       </Grid>
@@ -129,13 +132,15 @@ export default () => {
                 target="_blank"
                 rel="noreferrer noopener"
                 title="Watch Product Video"
-              >Watch Video</a>
+              >
+                <MdOndemandVideo />{' '}Watch Video
+              </a>
             ) : 'N/A'}
           </div>
         ))}
       </Grid>
       <Grid colCount={colCount}>
-        <div>Product Video</div>
+        <div>Product PDF</div>
         {state.compare.map(({ acf, ID }) => (
           <div key={ID}>
             {acf.pdf ? (
@@ -145,7 +150,7 @@ export default () => {
                 rel="noreferrer noopener"
                 title="View Product PDF"
               >
-                Watch Video
+                <MdPictureAsPdf />{' '}Watch Video
               </a>
             ) : 'N/A'}
           </div>
@@ -164,12 +169,18 @@ export default () => {
         ))}
       </Grid>
 
-      {specsToShow.map(spec => (
-        <Grid colCount={colCount} key={spec}>
-          <div>{spec}</div>
-          {state.compare.map(({ post_title, ID }) => <div key={ID}>{post_title}</div>)}
-        </Grid>
-      ))}
-    </>
+      {specsToShow.map(spec => {
+        const key = spec.toLowerCase().replace(/ /g, '_').replace(/\(|\)/g, '')
+        console.log(key)
+        return (
+          <Grid colCount={colCount} key={spec}>
+            <div>{spec}</div>
+            {state.compare.map(({ acf, ID }) => {
+              return <div key={ID}>{acf[key] ? acf[key] : 'N/A'}</div>
+            })}
+          </Grid>
+        )
+      })}
+    </div>
   )
 }

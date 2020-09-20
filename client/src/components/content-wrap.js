@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { lighten } from 'polished'
 import CONSTANTS from '../constants'
 
 // padding: 20px 30px 60px calc(${CONSTANTS.NAV_WIDTH} + 30px);
