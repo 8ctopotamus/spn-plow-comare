@@ -14,18 +14,18 @@ function spn_plow_compare_load_shortcode_resources() {
 	
   wp_register_style( 'animate_css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css' );
 
-	// localhost
-	if (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
-		$app_js = 'http://localhost:3000/static/js/bundle.js';
-	} 
-	// production - load compiled react app
-	else {
-		// load built react app here
-		$compiledReactApp = preg_grep('~^main.*\.js$~', scandir(plugin_dir_path( __DIR__ ) . "client/build/static/js"));
-		$app_js = plugin_dir_path( __DIR__ ) .'client/build/static/js/' . $compiledReactApp[2];
-	}
+	if ( $isLocalhost && !$testing ) {
+    $react_app_js = 'http://localhost:3000/static/js/bundle.js';
+  } else {
+		// production
+    $jsBundle = glob(plugin_dir_path( __DIR__ ) . "client/build/static/js/*.js");
+    if (!empty($jsBundle)) {        
+      $jsPathParts = explode(PLUGIN_SLUG, $jsBundle[0]);
+      $react_app_js = site_url() . '/wp-content/plugins/' . PLUGIN_SLUG . $jsPathParts[1];
+    }
+  }
 
-	wp_register_script( 'spn_plow_compare_react_app', $app_js, array(), false, true );
+	wp_register_script( 'spn_plow_compare_react_app', $react_app_js, array(), false, true );
 
 	// check if shorcode is used
 	$shortcode_found = false;
