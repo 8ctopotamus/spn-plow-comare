@@ -9,6 +9,7 @@ const Sidebar = styled.div`
   height: 100%;
   min-height: ${CONSTANTS.APP_MIN_HEIGHT};
   padding-top: 60px;
+  z-index: 10;
   @media (max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
     display: ${props => props.open ? 'block' : 'none'};
     position: absolute;
@@ -18,6 +19,7 @@ const Sidebar = styled.div`
 
 export default ({ children }) => {
   const { state } = useContext(AppContext)
+
   return (    
     <Sidebar open={state.sidebarOpen} className="animated slideInLeft">
       { children }

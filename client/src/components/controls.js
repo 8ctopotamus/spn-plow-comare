@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { MdRestore } from 'react-icons/md'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
+import Checkbox from './checkbox'
 import ControlGroup from './control-group'
 import CONSTANTS from '../constants'
 
@@ -66,14 +67,12 @@ export default () => {
             break
           default:
             Control = Object.values(val).map(v => (val !== '' ? (
-              <label key={v}>
-                <input
-                  name={key}
-                  value={v}
-                  onChange={e => dispatch({ type: 'TOGGLE_FILTER', payload: e.target })}
-                  type="checkbox"
-                /> {v}
-              </label>
+              <Checkbox 
+                name={key}
+                value={v} 
+                onChange={e => dispatch({ type: 'TOGGLE_FILTER', payload: e.target })}
+                key={key} 
+              />
             ) : null))
         }
 

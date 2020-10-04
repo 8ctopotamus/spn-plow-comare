@@ -57,35 +57,12 @@ export default () => {
     <div className="comparison-chart">
       <Grid colCount={colCount}>
         <div><h2>Snow plow news</h2></div>
-        {state.compare.map(({ post_title, ID, featured_image }) => (
-          <div key={ID}>
-            {featured_image && <img src={featured_image} alt={post_title} />}
-            <h3>{post_title}</h3>
-          </div>
-        ))}
-      </Grid>
-      <Grid colCount={colCount}>
-        <div>Does it Fit?</div>
-        {state.compare.map(({ ID }) => (
-          <div key={ID}>
-            <a href="https://www.snoway.com/what-plow-fits-my-truck/" target="_blank" rel="noreferrer noopener">Click Here</a> to see if this plow will fit your exact model truck.)
-          </div>
-        ))}
-      </Grid>
-      <Grid colCount={colCount}>
-        <div>Where To Buy?</div>
-        {state.compare.map(({ ID, acf }) => {
-          const { mfg_id } = acf
+        {state.compare.map(({ post_title, ID, featured_image }) => {
+          console.log(featured_image)
           return (
             <div key={ID}>
-              Find a Sno-Way Dealer near you.
-              <form name="findDealerByBrand" action="//dealers.snowplownews.com?bd=1" method="post" target="_blank">
-                {mfg_id && ( <input type="hidden" name="mfg_id" value={mfg_id} /> )}
-                <input type="hidden" name="distance" value="50"/>
-                <input type="hidden" name="locationsubmitted" value="1"/>
-                <input type="text" name="postalcode" placeholder="Zipcode"/> 
-                <input type="submit" value="Find Dealers"/>
-              </form>
+              {featured_image && <img src={featured_image} alt={post_title} />}
+              <h3>{post_title}</h3>
             </div>
           )
         })}
@@ -155,6 +132,32 @@ export default () => {
             ) : 'N/A'}
           </div>
         ))}
+      </Grid>
+      <Grid colCount={colCount}>
+        <div>Does it Fit?</div>
+        {state.compare.map(({ ID }) => (
+          <div key={ID}>
+            <a href="https://www.snoway.com/what-plow-fits-my-truck/" target="_blank" rel="noreferrer noopener">Click Here</a> to see if this plow will fit your exact model truck.)
+          </div>
+        ))}
+      </Grid>
+      <Grid colCount={colCount}>
+        <div>Where To Buy?</div>
+        {state.compare.map(({ ID, acf }) => {
+          const { mfg_id } = acf
+          return (
+            <div key={ID}>
+              Find a Sno-Way Dealer near you.
+              <form name="findDealerByBrand" action="//dealers.snowplownews.com?bd=1" method="post" target="_blank">
+                {mfg_id && ( <input type="hidden" name="mfg_id" value={mfg_id} /> )}
+                <input type="hidden" name="distance" value="50"/>
+                <input type="hidden" name="locationsubmitted" value="1"/>
+                <input type="text" name="postalcode" placeholder="Zipcode"/> 
+                <input type="submit" value="Find Dealers"/>
+              </form>
+            </div>
+          )
+        })}
       </Grid>
       
       <br/><br/>

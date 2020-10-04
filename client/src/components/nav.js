@@ -27,11 +27,12 @@ const SidebarToggle = styled.div`
 const Badge = styled.div`
   display: flex;
   align-items: center;
+  color: ${CONSTANTS.COLORS.SECONDARY};
+  font-weight: bold;
   border-radius: 8px;
-  padding: 5px 10px;
-  color: white;
-  cursor: pointer;
   margin-left: 12px;
+  padding: 5px 10px;
+  cursor: pointer;
   &:hover {
     background: rgba(255,255,255,0.25);
   }
@@ -41,6 +42,7 @@ const Badge = styled.div`
 `
 
 const Button = styled.button`
+  border: none;
   background: ${darken(0.1, CONSTANTS.COLORS.SECONDARY)};
   color: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)};
   font-weight: bold;

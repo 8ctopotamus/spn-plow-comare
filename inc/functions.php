@@ -177,9 +177,12 @@ function upload_plow_data() {
       if (!$val || !$val === '') continue; // skip the empties
 
       if ($key === 'image' && $val) {
-        $found = spn_get_attachement_id($val, $newPostId);
-        if (!$found) continue;
-        $val = $found;
+        $foundId = spn_get_attachement_id($val, $newPostId);
+        if ($foundId) {
+          set_post_thumbnail($newPostId, $foundId);          
+          // $val = $found;
+          continue;
+        }
       }
       // ToDo: blade_thickness and blade_cutting_edge_thickness: convert decimal to fraction (text field)
       update_field($key, $val, $newPostId);
