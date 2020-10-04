@@ -62,6 +62,8 @@ function spn_plow_compare_load_shortcode_resources() {
 			}
 		}
 
+		shuffle($allPlows);
+
 		$truck_size = array_unique(array_map(function($size) {
 			return $size->name;
 		}, get_terms('truck_size')));
