@@ -8,11 +8,11 @@ const iconSize = '30px'
 const padding = '15px'
 
 const ControlGroup = styled.div`
-  ul {
+  & ul {
     list-style-type: none;
     margin-left: 0;
   }
-  input[type="checkbox"] {
+  & input[type="checkbox"] {
     margin: 0 10px 0 0;
   }
 `
@@ -24,8 +24,13 @@ const Header = styled.div`
   cursor: pointer;
   padding: ${padding};
   background: ${({active}) => active ? darken(0.1, CONSTANTS.COLORS.PRIMARY) : 'none'};
-  :hover {
+  &:hover {
     background: ${darken(0.15, CONSTANTS.COLORS.PRIMARY)};
+  }
+  @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    & p {
+      font-size: 18px;
+    }
   }
 `
 

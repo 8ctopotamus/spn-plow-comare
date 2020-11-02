@@ -14,9 +14,9 @@ const AppBackground = styled.div`
 const App = () => (
   <AppBackground>
     <AppProvider>
-      <Affix offset={0}>
         <Nav/>
-      </Affix>
+      {/* <Affix offset={0}>
+      </Affix> */}
       <Router />
     </AppProvider>
   </AppBackground>

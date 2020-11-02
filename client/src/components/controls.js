@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { darken } from 'polished'
 import { MdRestore } from 'react-icons/md'
 import AppContext from '../context/index'
 import MultiRange from './multirange'
@@ -14,6 +15,19 @@ const Heading = styled.p`
   margin-bottom: 5px;
   padding: 15px;
   text-transform: uppercase;
+`
+
+const SearchInput = styled.input`
+  padding: 15px;
+  color: white;
+  border-color: transparent;
+  width: 100% !important;
+  outline: none;
+  background: ${darken(0.1, CONSTANTS.COLORS.PRIMARY)};
+  &:focus {
+    border-bottom-color: ${CONSTANTS.COLORS.SECONDARY};
+    background: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)};
+  }
 `
 
 const Reset = styled.button`
@@ -33,14 +47,14 @@ export default () => {
     <>
       <div style={{padding: '0 15px'}}>
         <Heading>SEARCH</Heading>
-        <input 
+      </div>
+        <SearchInput 
           onChange={e => dispatch({ type: 'UPDATE_SEARCH', payload: e.target.value })} 
           value={state.search}
           placeholder="Keyword search" 
           type="search"
           style={{ marginBottom: 15 }}
         />
-      </div>
       {Object.entries(controls).map(entry => {
         const [key, val] = entry
         let Control

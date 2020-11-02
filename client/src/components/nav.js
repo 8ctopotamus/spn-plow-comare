@@ -8,8 +8,16 @@ import CONSTANTS from '../constants'
 const Nav = styled.div`
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: stretch;
   background: #23448a;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    height: 60px;
+  }
 `
 
 const SidebarToggle = styled.div`
@@ -27,15 +35,19 @@ const SidebarToggle = styled.div`
 const Badge = styled.div`
   display: flex;
   align-items: center;
+  background-color: ${darken(0.1, CONSTANTS.COLORS.PRIMARY)};
+  ${({backgroundImage}) => backgroundImage ? `background-image: url(${backgroundImage})` : null};
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: 0;
   color: ${CONSTANTS.COLORS.SECONDARY};
   font-weight: bold;
-  border-radius: 8px;
-  margin-left: 12px;
   padding: 5px 10px;
+  height: 100%;
+  width: 160px;
   cursor: pointer;
-  &:hover {
-    background: rgba(255,255,255,0.25);
-  }
+  overflow: hidden;
+  box-shadow: inset -16px 0px 26px black;
   @media(max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
     display: none;
   }
@@ -50,6 +62,10 @@ const Button = styled.button`
     background: none;
     color: white;
     opacity: 0.5;
+  }
+  @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    font-size: 22px;
+    padding: 15px;
   }
 `
 
@@ -77,13 +93,20 @@ export default () => {
 
       { state.compare.map(p => (
         <Badge
+          backgroundImage={p.featured_image}
           onClick={() => dispatch({
             type: 'TOGGLE_COMPARE',
             payload: p,
           })}
           key={p.ID}
         >
-          {p.post_name}
+          {/* {p.featured_image && (
+            <Image
+              src={p.featured_image}
+              alt={p.post_name}
+            />
+          )} */}
+          {p.post_title}
           {' '}
           <MdRemoveCircleOutline />
         </Badge>
