@@ -80,7 +80,8 @@ export default ({ plow, dispatch, selected, numSelected }) => {
         {plow_categories && plow_categories.length > 0 && (
           <span>{plow_categories[0]}</span>
         )}
-        <h3 style={{ marginTop: 0 }}>{plow.post_name}</h3>
+        
+        <h3 style={{ marginTop: 0 }}>{plow.post_title}</h3>
 
         {!ready && (
           <ReactPlaceholder

@@ -6,15 +6,6 @@ import Repeatable from './repeatable'
 import AppContext from '../context'
 import CONSTANTS from '../constants'
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: ${({colCount}) => `repeat(${colCount}, 1fr)`};
-  & > div {
-    border: .5px solid ${CONSTANTS.COLORS.PRIMARY};
-    padding: 12px;
-  }
-`
-  
 const specsToShow = [
   'Availability',
   'Plow Type',
@@ -48,20 +39,38 @@ const specsToShow = [
   'Lift Cylinder Length',
 ]
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: ${({colCount}) => `repeat(${colCount}, 1fr)`};
+  & > div {
+    border: .5px solid ${CONSTANTS.COLORS.PRIMARY};
+    padding: 12px;
+  }
+`
+
+const Img = styled.img`
+  display: block;
+  mix-blend-mode: multiply;
+  margin: 0 auto;
+`
+
 export default () => {
   const { state } = useContext(AppContext)
   const colCount = state.compare.length + 1
-  console.log(state.compare)
   
   return (
     <div className="comparison-chart">
       <Grid colCount={colCount}>
         <div><h2>Snow plow news</h2></div>
-        {state.compare.map(({ post_title, ID, featured_image }) => {
-          console.log(featured_image)
+        {state.compare.map(({ post_title, ID, featured_image, plow_categories }) => {
           return (
             <div key={ID}>
-              {featured_image && <img src={featured_image} alt={post_title} />}
+              {featured_image && <Img src={featured_image} alt={post_title} />}
+
+              {plow_categories && plow_categories.length > 0 && (
+                <p>{plow_categories[0]}</p>
+              )}
+              
               <h3>{post_title}</h3>
             </div>
           )

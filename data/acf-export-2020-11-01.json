@@ -4,6 +4,25 @@
         "title": "Plows PostType",
         "fields": [
             {
+                "key": "field_5f9f08108651d",
+                "label": "Sticky",
+                "name": "sticky",
+                "type": "true_false",
+                "instructions": "Stick to the top of the listing",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
                 "key": "field_5ea327fdeee0d",
                 "label": "ID",
                 "name": "ID",

@@ -10,3 +10,11 @@ Use the shortcode `[spn-plow-compare]` anywhere on your site!
 3. Compile React app (client - npm run build)
 
 Note: Google ads typically 300x250px
+
+## Todos:
+* [x] Add brand names to compare chart
+* [x] sticky plow posts
+* [ ] Make Compare Bar stand out more
+* [ ] specs in generated PDF 
+* [ ] Track Compare: all manufacturers and models selected
+* [ ] Track Where to buy submission: ZIP, manufacturer, model

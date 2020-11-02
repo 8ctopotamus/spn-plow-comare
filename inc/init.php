@@ -47,8 +47,12 @@ function spn_plow_compare_load_shortcode_resources() {
 			return $p->acf['plow_type'];
 		}, $allPlows));
 
+		$sticky = [];
+		$nonSticky = [];
+
 		$manufacturers = [];
 		$bladeWidths = [];
+
 		foreach($allPlows as $p) {
 			if ($p->plow_categories) {
 				foreach( $p->plow_categories as $pCat) {
@@ -60,9 +64,16 @@ function spn_plow_compare_load_shortcode_resources() {
 					}
 				}
 			}
+			// sort the plow
+			if ($p->acf['sticky']) {
+				$sticky[] = $p;
+			} else {
+				$nonSticky[] = $p;
+			}
 		}
 
-		shuffle($allPlows);
+		shuffle($nonSticky);
+		$allPlows = array_merge($sticky, $nonSticky);		
 
 		$truck_size = array_unique(array_map(function($size) {
 			return $size->name;
