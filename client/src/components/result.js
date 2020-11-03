@@ -5,6 +5,7 @@ import { MdAddCircleOutline, MdRemoveCircleOutline } from 'react-icons/md'
 import ReactPlaceholder from 'react-placeholder';
 import "react-placeholder/lib/reactPlaceholder.css";
 import CONSTANTS from '../constants'
+import { convertInchestoFtAndIn } from '../utils/helpers'
 
 const Result = styled.div`
   background: ${({ selected }) => selected ? lighten(0.42, CONSTANTS.COLORS.SECONDARY) : 'white'};
@@ -101,7 +102,7 @@ export default ({ plow, dispatch, selected, numSelected }) => {
         )}
 
         {/* TODO: width should be ft in, ex: 8'2" */}
-        <p>W: {blade_width_expanded}" x H: {blade_height_max}"</p>
+        <p>W: {convertInchestoFtAndIn(blade_width_expanded)} x H: {convertInchestoFtAndIn(blade_height_max)}</p>
       </ResultInner>
     </Result>
   )

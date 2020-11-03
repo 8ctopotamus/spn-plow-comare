@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { transparentize } from 'polished'
 import CONSTANTS from '../constants'
 import AppContext from '../context'
 
@@ -14,6 +15,7 @@ const Sidebar = styled.div`
     display: ${props => props.open ? 'block' : 'none'};
     position: absolute;
     width: 100%;
+    background-color: ${transparentize(.05, CONSTANTS.COLORS.PRIMARY)};
   }
 `
 

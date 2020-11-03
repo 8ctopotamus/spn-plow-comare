@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import { darken } from 'polished'
 import CONSTANTS from '../constants'
+import { convertInchestoFtAndIn } from '../utils/helpers'
 
 const STEP = 0.1;
 const COLORS = ['#0C2960', darken(0.1, CONSTANTS.COLORS.SECONDARY), '#0C2960'];
@@ -43,7 +44,7 @@ class MultipleThumbs extends React.Component {
               <div
                 ref={props.ref}
                 style={{
-                  height: '5px',
+                  height: '15px',
                   width: '100%',
                   borderRadius: '4px',
                   background: getTrackBackground({
@@ -85,7 +86,7 @@ class MultipleThumbs extends React.Component {
           )}
         />
         <output style={{ marginTop: '30px' }}>
-          {this.state.values[0].toFixed(1)} - {this.state.values[1].toFixed(1)}{' '}
+          {convertInchestoFtAndIn(this.state.values[0].toFixed(1))}  {convertInchestoFtAndIn(this.state.values[1].toFixed(1))}{' '}
         </output>
       </div>
     );

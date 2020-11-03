@@ -14,7 +14,9 @@ Note: Google ads typically 300x250px
 ## Todos:
 * [x] Add brand names to compare chart
 * [x] sticky plow posts
-* [ ] Make Compare Bar stand out more
+* [x] Show WxH in Feet and Inches
+* [x] Make Compare Bar stand out more
+* [x] Make Sidebar slightly transparent on mobile
 * [ ] specs in generated PDF 
 * [ ] Track Compare: all manufacturers and models selected
 * [ ] Track Where to buy submission: ZIP, manufacturer, model

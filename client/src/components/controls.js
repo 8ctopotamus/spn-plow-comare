@@ -15,6 +15,9 @@ const Heading = styled.p`
   margin-bottom: 5px;
   padding: 15px;
   text-transform: uppercase;
+  @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
+    font-size: 18px;
+  }
 `
 
 const SearchInput = styled.input`
@@ -24,7 +27,11 @@ const SearchInput = styled.input`
   width: 100% !important;
   outline: none;
   background: ${darken(0.1, CONSTANTS.COLORS.PRIMARY)};
+  ::placeholder {
+    color: white;
+  }
   &:focus {
+    border-color: transparent;
     border-bottom-color: ${CONSTANTS.COLORS.SECONDARY};
     background: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)};
   }

@@ -1,0 +1,1 @@
+export const convertInchestoFtAndIn = num => `${Math.floor(num/12)}' ${Math.floor(num % 12)}"`
