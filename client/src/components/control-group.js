@@ -24,13 +24,9 @@ const Header = styled.div`
   cursor: pointer;
   padding: ${padding};
   background: ${({active}) => active ? darken(0.1, CONSTANTS.COLORS.PRIMARY) : 'none'};
+  border-bottom: 1px solid ${darken(0.1, CONSTANTS.COLORS.PRIMARY)};
   &:hover {
     background: ${darken(0.15, CONSTANTS.COLORS.PRIMARY)};
-  }
-  @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
-    & p {
-      font-size: 18px;
-    }
   }
 `
 

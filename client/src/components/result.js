@@ -53,7 +53,7 @@ const Image = styled.img`
   mix-blend-mode: ${({ selected }) => selected ? 'multiply' : 'none'}
 `
 
-export default ({ plow, dispatch, selected, numSelected }) => {
+export default ({ idx, plow, dispatch, selected, numSelected }) => {
   const { acf, plow_categories, featured_image } = plow
   const { blade_height_max, blade_width_expanded, } = acf
   const [ready, setReady] = useState(false)
@@ -71,6 +71,7 @@ export default ({ plow, dispatch, selected, numSelected }) => {
     <Result
       selected={selected}
       onClick={handleResultClick}
+      idx={idx}
     >
       <CompareBar selected={selected}>
         {selected ? <MdRemoveCircleOutline /> : <MdAddCircleOutline />}

@@ -13,7 +13,7 @@ const Heading = styled.p`
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 5px;
-  padding: 15px;
+  padding: 0 15px;
   text-transform: uppercase;
   @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
     font-size: 18px;
@@ -23,15 +23,22 @@ const Heading = styled.p`
 const SearchInput = styled.input`
   padding: 15px;
   color: white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
   border-color: transparent;
   width: 100% !important;
   outline: none;
+  margin-bottom: 0;
   background: ${darken(0.1, CONSTANTS.COLORS.PRIMARY)};
   ::placeholder {
     color: white;
   }
   &:focus {
-    border-color: transparent;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-bottom-color: ${CONSTANTS.COLORS.SECONDARY};
     background: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)};
   }
@@ -60,7 +67,6 @@ export default () => {
           value={state.search}
           placeholder="Keyword search" 
           type="search"
-          style={{ marginBottom: 15 }}
         />
       {Object.entries(controls).map(entry => {
         const [key, val] = entry
@@ -92,7 +98,7 @@ export default () => {
                 name={key}
                 value={v} 
                 onChange={e => dispatch({ type: 'TOGGLE_FILTER', payload: e.target })}
-                key={key} 
+                key={`${key}-${val}`} 
               />
             ) : null))
         }

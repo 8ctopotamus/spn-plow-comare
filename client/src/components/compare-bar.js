@@ -8,7 +8,7 @@ import CONSTANTS from '../constants'
 
 const breathe = keyframes`
   0% { background: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)}; }
-  50% { background: ${CONSTANTS.COLORS.PRIMARY}; }
+  50% { background: ${lighten(0.1, CONSTANTS.COLORS.PRIMARY)}; }
   100% { background: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)}; }
 `
 
@@ -72,6 +72,9 @@ const Button = styled.button`
   background: ${darken(0.1, CONSTANTS.COLORS.SECONDARY)};
   font-weight: bold;
   color: white;
+  &:focus {
+    background: ${darken(0.15, CONSTANTS.COLORS.SECONDARY)};
+  }
   &:disabled {
     animation: ${breathe} 2.5s ease-in-out infinite;
     background: ${darken(0.1, CONSTANTS.COLORS.PRIMARY)};
@@ -93,7 +96,7 @@ export default () => {
       if (numLoaded < 2) {
         return <><MdControlPoint />{' '}Select plows</>
       }
-      return <><MdCompareArrows />{' '}COMPARE {numLoaded} PLOW{numLoaded === 1 ? '' : 's'}</>
+      return <><MdCompareArrows size="30" />{' '}COMPARE {numLoaded} PLOW{numLoaded === 1 ? '' : 's'}</>
     }
     return <><MdSearch/>{' '}PLOW SEARCH</>
   }
@@ -105,11 +108,13 @@ export default () => {
 
   return (
     <Nav>
-      <SidebarToggle onClick={() => dispatch({type: 'SET_SIDEBAR', payload: !state.sidebarOpen})}>
-        { state.sidebarOpen 
-          ? <MdClose size="30" />
-          : <BiSlider size="30" /> }
-      </SidebarToggle>
+      {state.view === 'SEARCH' && (
+        <SidebarToggle onClick={() => dispatch({type: 'SET_SIDEBAR', payload: !state.sidebarOpen})}>
+          { state.sidebarOpen 
+            ? <MdClose size="30" />
+            : <BiSlider size="30" /> }
+        </SidebarToggle>
+      )}
 
       { state.compare.map(p => (
         <Badge

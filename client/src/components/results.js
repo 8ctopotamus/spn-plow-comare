@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Animated } from 'react-animated-css'
 import styled from 'styled-components'
 import AppContext from '../context'
 import Result from './result'
@@ -44,17 +45,23 @@ export default () => {
   return (
     <Results>
       <Grid cols={4} gap="30px">
-        { filtered.map(p => {
+        { filtered.map((p, i) => {
           const selected = state.compare
             .find(c => c.ID === p.ID) ? true : false
           return (
-            <Result
-              plow={p}
-              dispatch={dispatch}
-              selected={selected}
-              numSelected={state.compare.length}
+            <Animated
+              animationIn="fadeInUp"
+              animationInDelay={260 + (i * 100)}
               key={p.ID}
-            />
+            >
+              <Result
+                plow={p}
+                dispatch={dispatch}
+                selected={selected}
+                numSelected={state.compare.length}
+                key={p.ID}
+              />
+            </Animated>
           )
         }) }
       </Grid>

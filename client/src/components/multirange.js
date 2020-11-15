@@ -86,7 +86,7 @@ class MultipleThumbs extends React.Component {
           )}
         />
         <output style={{ marginTop: '30px' }}>
-          {convertInchestoFtAndIn(this.state.values[0].toFixed(1))}  {convertInchestoFtAndIn(this.state.values[1].toFixed(1))}{' '}
+          {convertInchestoFtAndIn(this.state.values[0].toFixed(1))} - {convertInchestoFtAndIn(this.state.values[1].toFixed(1))}{' '}
         </output>
       </div>
     );
