@@ -93,3 +93,33 @@ function spn_plow_compare_load_shortcode_resources() {
 		wp_enqueue_script( 'spn_plow_compare_react_app' );
 	}
 }
+
+
+
+
+
+
+// show products from 2 cats on product_cat archives
+function spn_compare_archive($query) {
+	$plows = $_GET['plows'];
+	if ( !is_admin() && is_post_type_archive( 'plows' ) && !empty($plows) && $query->is_main_query()) {
+    $queryParams = explode(' ', $plows);
+
+    // $taxArray = [];
+
+    // forEach($queryParams as $param) {
+    //   array_push($taxArray , array(
+    //      'taxonomy' => 'product_cat',
+    //      'field' => 'slug',
+    //      'terms' => $param
+    //     )
+    //   );
+    // }
+
+    // // add relation to inclusivly filter multiple cats
+    // $taxArray['relation'] = 'AND';
+
+    // $query->set('tax_query', $taxArray);
+  }
+}
+add_action('pre_get_posts','spn_compare_archive');
