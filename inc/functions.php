@@ -27,7 +27,6 @@ function spn_get_plow_data() {
           $p->truck_size[] = $size->name;
         }
       }
-
       $data[] = $p;
     }
   } 

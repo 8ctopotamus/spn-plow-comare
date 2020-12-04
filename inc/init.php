@@ -80,6 +80,7 @@ function spn_plow_compare_load_shortcode_resources() {
 		}, get_terms('truck_size')));
 		
 		wp_localize_script( 'spn_plow_compare_react_app', 'wp_data', [
+      'site_url' => site_url(),
 			'plows' => $allPlows,
 			'controls' => [
 				'truck_size' => $truck_size,
@@ -87,39 +88,7 @@ function spn_plow_compare_load_shortcode_resources() {
 				'blade_width_expanded' => $bladeWidths,
 				'manufacturers' => $manufacturers,
 			],
-      'site_url' => site_url(),
-      'admin_ajax_url' => esc_url( admin_url('admin-post.php')),
     ] );
 		wp_enqueue_script( 'spn_plow_compare_react_app' );
 	}
 }
-
-
-
-
-
-
-// show products from 2 cats on product_cat archives
-function spn_compare_archive($query) {
-	$plows = $_GET['plows'];
-	if ( !is_admin() && is_post_type_archive( 'plows' ) && !empty($plows) && $query->is_main_query()) {
-    $queryParams = explode(' ', $plows);
-
-    // $taxArray = [];
-
-    // forEach($queryParams as $param) {
-    //   array_push($taxArray , array(
-    //      'taxonomy' => 'product_cat',
-    //      'field' => 'slug',
-    //      'terms' => $param
-    //     )
-    //   );
-    // }
-
-    // // add relation to inclusivly filter multiple cats
-    // $taxArray['relation'] = 'AND';
-
-    // $query->set('tax_query', $taxArray);
-  }
-}
-add_action('pre_get_posts','spn_compare_archive');

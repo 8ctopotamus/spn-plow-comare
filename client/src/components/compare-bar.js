@@ -5,6 +5,7 @@ import styled, { keyframes } from 'styled-components'
 import { darken, lighten } from 'polished'
 import AppContext from '../context'
 import CONSTANTS from '../constants'
+import WP_DATA from '../context/wp_data'
 
 const breathe = keyframes`
   0% { background: ${darken(0.2, CONSTANTS.COLORS.PRIMARY)}; }
@@ -132,8 +133,17 @@ export default () => {
       )) }
 
       <Button
-        onClick={() => dispatch({ type: 'CHANGE_VIEW' })}
         disabled={notEnoughPlows}
+        onClick={() => {
+          // Note: SPN decided that we will no longer show the comparison in-app...
+          // dispatch({ type: 'CHANGE_VIEW' })
+
+          // ...instead, we will open to another page to show the comparison.
+          const compareSlug = state.compare
+            .map(({plow_categories, post_name}) => `${plow_categories && plow_categories.length > 0 && `${plow_categories[0]}_`  }${post_name}`)
+            .join('__vs__')
+          window.open(`${WP_DATA.site_url}/compare/${compareSlug}`)
+        }}
       >
         { renderButtonText() }
       </Button>

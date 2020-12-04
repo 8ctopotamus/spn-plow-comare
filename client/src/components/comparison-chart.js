@@ -131,12 +131,13 @@ export default () => {
           <div key={ID}>
             {acf.pdf ? (
               <a 
-                href={`http://snowplownews.com/cm/pdfs/?v=${acf.pdf}`}
+                href={`http://snowplownews.com/cm/pdfs/${acf.pdf}`}
                 target="_blank"
+                download
                 rel="noreferrer noopener"
                 title="View Product PDF"
               >
-                <MdPictureAsPdf />{' '}Watch Video
+                <MdPictureAsPdf />{' '} DownloadPDF
               </a>
             ) : 'N/A'}
           </div>
@@ -183,7 +184,6 @@ export default () => {
 
       {specsToShow.map(spec => {
         const key = spec.toLowerCase().replace(/ /g, '_').replace(/\(|\)/g, '')
-        console.log(key)
         return (
           <Grid colCount={colCount} key={spec}>
             <div>{spec}</div>

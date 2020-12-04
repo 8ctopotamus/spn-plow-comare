@@ -45,10 +45,10 @@ function spn_custom_posttypes() {
   register_taxonomy( 'truck_size', 
     array(0 => 'plows'),
     array(
-    'show_in_rest' => true, /* Required to expose to WP-JSON API */
-    'rest_base'=> 'truck-size', /* Required to expose to WP-JSON API */
-    'rest_controller_class' => 'WP_REST_Terms_Controller', /* Required to expose to WP-JSON API */
-    'hierarchical' => true,
+      'show_in_rest' => true, /* Required to expose to WP-JSON API */
+      'rest_base'=> 'truck-size', /* Required to expose to WP-JSON API */
+      'rest_controller_class' => 'WP_REST_Terms_Controller', /* Required to expose to WP-JSON API */
+      'hierarchical' => true,
       'label' => 'Truck Sizes',
       'show_ui' => true,
       'query_var' => true,

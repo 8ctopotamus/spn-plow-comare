@@ -9,6 +9,7 @@ const controls = (WP_DATA && WP_DATA.controls) && WP_DATA.controls
   : null
 
 export default {
+  ...WP_DATA,
   plows,
   controls
 }
