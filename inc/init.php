@@ -52,6 +52,7 @@ function spn_plow_compare_load_shortcode_resources() {
 
 		$manufacturers = [];
 		$bladeWidths = [];
+		$bladeMaterials = [];
 
 		foreach($allPlows as $p) {
 			if ($p->plow_categories) {
@@ -61,6 +62,9 @@ function spn_plow_compare_load_shortcode_resources() {
 					}
 					if ($p->acf['blade_width_expanded']) {
 						$bladeWidths[] = (int)$p->acf['blade_width_expanded'];
+					}
+					if ($p->acf['blade_material'] && !in_array($p->acf['blade_material'], $bladeMaterials)) {
+						$bladeMaterials[] = $p->acf['blade_material'];
 					}
 				}
 			}
@@ -86,6 +90,7 @@ function spn_plow_compare_load_shortcode_resources() {
 				'truck_size' => $truck_size,
 				'plow_type' => $plowTypes,
 				'blade_width_expanded' => $bladeWidths,
+				'blade_material' => $bladeMaterials,
 				'manufacturers' => $manufacturers,
 			],
     ] );

@@ -19,12 +19,19 @@ const Sidebar = styled.div`
   }
 `
 
+const Overflow = styled.div`
+  max-height: 100vh;
+  overflow-y: auto;
+`
+
 export default ({ children }) => {
   const { state } = useContext(AppContext)
 
   return (    
     <Sidebar open={state.sidebarOpen} className="animated slideInLeft">
-      { children }
+      <Overflow>
+        { children }
+      </Overflow>
     </Sidebar>
   )
 }
