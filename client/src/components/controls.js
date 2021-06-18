@@ -102,7 +102,7 @@ export default () => {
         }
 
         return val !== '' ? (
-          <ControlGroup key={key} heading={<Heading>{key}</Heading>}>
+          <ControlGroup key={key} heading={<Heading>{key.replace(/_/g, ' ')}</Heading>}>
             {Control}
           </ControlGroup>
         ) : null
