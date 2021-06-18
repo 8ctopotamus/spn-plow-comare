@@ -15,9 +15,7 @@ const Heading = styled.p`
   margin-bottom: 5px;
   padding: 0 15px;
   text-transform: uppercase;
-  @media (min-width: ${CONSTANTS.BREAKPOINTS.MD}) {
-    font-size: 18px;
-  }
+  
 `
 
 const SearchInput = styled.input`

@@ -83,7 +83,7 @@ export default ({ idx, plow, dispatch, selected, numSelected }) => {
           <span>{plow_categories[0]}</span>
         )}
         
-        <h3 style={{ marginTop: 0 }}>{plow.post_title}</h3>
+        <h3 style={{ marginTop: 0 }} dangerouslySetInnerHTML={{ __html: plow.post_title }} />
 
         {!ready && (
           <ReactPlaceholder
