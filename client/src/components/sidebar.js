@@ -9,7 +9,6 @@ const Sidebar = styled.div`
   color: white;
   height: 100%;
   min-height: ${CONSTANTS.APP_MIN_HEIGHT};
-  padding-top: 60px;
   z-index: 10;
   @media (max-width: ${CONSTANTS.BREAKPOINTS.MD}) {
     display: ${props => props.open ? 'block' : 'none'};

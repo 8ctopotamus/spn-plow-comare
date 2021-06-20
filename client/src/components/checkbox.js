@@ -44,7 +44,7 @@ const Label = styled.label`
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 12px;
   user-select: none;
   &:hover input ~ ${Checkmark} {
     background-color: ${CONSTANTS.COLORS.SECONDARY};

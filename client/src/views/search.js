@@ -22,9 +22,9 @@ export default () => {
   return (
     <Grid sidebarOpen={state.sidebarOpen}>
       <Sidebar>
-        <Affix offset={80}>
+        {/* <Affix offset={80}> */}
           <Controls/>
-        </Affix>
+        {/* </Affix> */}
       </Sidebar>
       <ContentWrap>
         <Results />

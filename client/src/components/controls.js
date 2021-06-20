@@ -8,6 +8,10 @@ import Checkbox from './checkbox'
 import ControlGroup from './control-group'
 import CONSTANTS from '../constants'
 
+const H3 = styled.h3`
+  color: white;
+`
+
 const Heading = styled.p`
   color: ${CONSTANTS.COLORS.SECONDARY};
   font-weight: bold;
@@ -15,7 +19,6 @@ const Heading = styled.p`
   margin-bottom: 5px;
   padding: 0 15px;
   text-transform: uppercase;
-  
 `
 
 const SearchInput = styled.input`
@@ -43,6 +46,7 @@ const SearchInput = styled.input`
 `
 
 const Reset = styled.button`
+  display: inline-block;
   cursor: pointer;
   text-align: right;
   width: auto;
@@ -58,6 +62,7 @@ export default () => {
   return (
     <>
       <div style={{padding: '0 15px'}}>
+        <H3>FILTER TOOLS</H3>
         <Heading>SEARCH</Heading>
       </div>
         <SearchInput 
@@ -67,11 +72,14 @@ export default () => {
           type="search"
         />
       {Object.entries(controls).map(entry => {
-        const [key, val] = entry
+        let [key, val] = entry
+        if (key === 'blade_width_expanded') {
+          key = key.replace('expanded', '')
+        }
+        key = key.replace(/_/g, ' ')
         let Control
         switch(key) {
-          case 'blade_width_expanded':
-            // TODO: memoize min max
+          case 'blade_width_expanded': 
             const min = Math.min(...controls.blade_width_expanded)
             const max = Math.max(...controls.blade_width_expanded)
             Control = (
@@ -107,7 +115,7 @@ export default () => {
           </ControlGroup>
         ) : null
       })}
-      <Reset onClick={() => dispatch({ type: 'RESET' })} type="button">
+      <Reset class="reset-filters" onClick={() => dispatch({ type: 'RESET' })} type="button">
         <MdRestore size="14px" />
         {' '}
         Reset
